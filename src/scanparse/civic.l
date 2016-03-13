@@ -6,7 +6,7 @@
 #include <limits.h>
 #include "types.h"
 #include "alloc.h"
-#include "civic_parser.h"
+#include "civic.parser.h"
 #include "logging.h"
 
 #define FILTER(token) global.col += yyleng; return(token);
