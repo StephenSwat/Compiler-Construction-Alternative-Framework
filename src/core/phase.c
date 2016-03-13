@@ -8,7 +8,7 @@ node *free_tree(node * arg_node);
 node *count_operators_init(node *);
 node *load_file_init(node *);
 node *parse_init(node *);
-node *output_init(node *);
+node *output_civvm_init(node *);
 node *print_init(node *);
 node *check_init(node *);
 
@@ -71,7 +71,7 @@ node *phase_run_met(node * syntax_tree) {
 }
 
 node *phase_run_cg(node * syntax_tree) {
-    syntax_tree = phase_subphase("gen", output_init, "Generating output", syntax_tree, global.outfile);
+    syntax_tree = phase_subphase("gen", output_civvm_init, "Generating civvm output", syntax_tree, global.backend == BE_civvm);
     syntax_tree = phase_subphase("frt", free_tree, "De-allocating syntax tree representation", syntax_tree, true);
 
     return syntax_tree;

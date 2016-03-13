@@ -1,5 +1,6 @@
 #pragma once
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef struct INFO info;
 
@@ -12,7 +13,7 @@ typedef node *(*traverse_fun_t)(node *, info*);
 typedef traverse_fun_t (*traverse_choice_t)(node *);
 
 typedef enum {
-    BE_civvm
+    BE_civvm, BE_none
 } backend_t;
 
 typedef enum {
@@ -85,7 +86,7 @@ typedef struct GLOBALS_T {
     compiler_phase_t break_subphase;
 
     char *infile;
-    char *outfile;
+    FILE *outfile;
     char *currentfile;
 
     int line;

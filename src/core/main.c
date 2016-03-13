@@ -24,7 +24,7 @@ void print_usage() {
            "    backend to use, use the following option:\n\n"
            "    -z <backend>    Name of program file to compile (default civvm).\n\n"
            "    To use the Civilised C virtual machine backend, specify 'civvm' and to use\n"
-           "    the dot language for generating graphs, specify 'dot'.\n");
+           "    no output at all, use 'none'.\n");
 
     printf("\nVERBOSITY OPTIONS:\n"
            "    civicc comes with several different levels of verbosity, ranging from -2 to\n"
@@ -91,7 +91,7 @@ void globals_init() {
 
 void check_options(int argc, char **argv) {
     int opt;
-    char *phase;
+    char *phase, *outfile = "-";
 
     while ((opt = getopt(argc, argv, "htb:o:v:z:")) != -1) {
         switch (opt) {
@@ -108,12 +108,13 @@ void check_options(int argc, char **argv) {
             global.verbosity = atoi(optarg);
             break;
         case 'o':
-            global.outfile = optarg;
+            outfile = optarg;
             break;
         case 'z':
             if (!strcmp(optarg, "civvm")) {
                 global.backend = BE_civvm;
-                global.outfile = global.outfile ? global.outfile : "output.cvm";
+            } else if (!strcmp(optarg, "none")) {
+                global.backend = BE_none;
             } else {
                 logging_log(ABORT, "Backend '%s' is not implemented.", optarg);
             }
@@ -125,6 +126,8 @@ void check_options(int argc, char **argv) {
             exit(EXIT_SUCCESS);
         }
     }
+
+    global.outfile = strcmp(outfile, "-") ? fopen(outfile, "w") : stdout;
 
     for (int i = optind; i < argc; i++)
         global.infile = argv[i];
