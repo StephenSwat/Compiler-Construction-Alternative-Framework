@@ -22,43 +22,43 @@ static char *print_type(typet type) {
 }
 
 node *PRTprogram(node * arg_node, info * arg_info) {
-    traverse_init(PROGRAM_DECLARATIONS(arg_node), arg_info);
+    traverse_init(arg_node->N_program.Declarations, arg_info);
     return arg_node;
 }
 
 node *PRTstatements(node * arg_node, info * arg_info) {
     logging_print_indent();
-    traverse_init(STATEMENTS_STATEMENT(arg_node), arg_info);
+    traverse_init(arg_node->N_statements.Statement, arg_info);
     printf(";\n");
-    traverse_opt(STATEMENTS_NEXT(arg_node), arg_info);
+    traverse_opt(arg_node->N_statements.Next, arg_info);
 
     return arg_node;
 }
 
 node *PRTdeclarations(node * arg_node, info * arg_info) {
-    traverse_init(DECLARATIONS_DECLARATION(arg_node), arg_info);
-    traverse_opt(DECLARATIONS_NEXT(arg_node), arg_info);
+    traverse_init(arg_node->N_declarations.Declaration, arg_info);
+    traverse_opt(arg_node->N_declarations.Next, arg_info);
     return arg_node;
 }
 
 node *PRTvardec(node * arg_node, info * arg_info) {
-    printf("%s ", print_type(VARDEC_TYPE(arg_node)));
-    traverse_init(VARDEC_VAR(arg_node), arg_info);
+    printf("%s ", print_type(arg_node->N_vardec.Type));
+    traverse_init(arg_node->N_vardec.Var, arg_info);
     return arg_node;
 }
 
 node *PRTassign(node * arg_node, info * arg_info) {
-    traverse_init(ASSIGN_VAR(arg_node), arg_info);
+    traverse_init(arg_node->N_assign.Var, arg_info);
     printf(" = ");
-    traverse_init(ASSIGN_EXPRESSION(arg_node), arg_info);
+    traverse_init(arg_node->N_assign.Expression, arg_info);
     return arg_node;
 }
 
 node *PRTbinop(node * arg_node, info * arg_info) {
     printf("(");
-    traverse_init(BINOP_LEFT(arg_node), arg_info);
+    traverse_init(arg_node->N_binop.Left, arg_info);
 
-    switch (BINOP_OP(arg_node)) {
+    switch (arg_node->N_binop.Op) {
         case BO_add: printf(" + "); break;
         case BO_sub: printf(" - "); break;
         case BO_mul: printf(" * "); break;
@@ -66,29 +66,29 @@ node *PRTbinop(node * arg_node, info * arg_info) {
         case BO_mod: printf(" %% "); break;
     }
 
-    traverse_init(BINOP_RIGHT(arg_node), arg_info);
+    traverse_init(arg_node->N_binop.Right, arg_info);
     printf(")");
 
     return arg_node;
 }
 
 node *PRTfloat(node * arg_node, info * arg_info) {
-    printf("%f", FLOAT_VALUE(arg_node));
+    printf("%f", arg_node->N_float.Value);
     return arg_node;
 }
 
 node *PRTint(node * arg_node, info * arg_info) {
-    printf("%i", INT_VALUE(arg_node));
+    printf("%i", arg_node->N_int.Value);
     return arg_node;
 }
 
 node *PRTbool(node * arg_node, info * arg_info) {
-    printf(BOOL_VALUE(arg_node) ? "true" : "false");
+    printf(arg_node->N_bool.Value ? "true" : "false");
     return arg_node;
 }
 
 node *PRTvar(node * arg_node, info * arg_info) {
-    printf("%s", VAR_NAME(arg_node));
+    printf("%s", arg_node->N_var.Name);
     return arg_node;
 }
 

@@ -4,15 +4,15 @@
 #include "htable.h"
 
 node *FREEassign(node * arg_node, info * arg_info) {
-    traverse_opt(ASSIGN_VAR(arg_node), arg_info);
-    traverse_opt(ASSIGN_EXPRESSION(arg_node), arg_info);
+    traverse_opt(arg_node->N_assign.Var, arg_info);
+    traverse_opt(arg_node->N_assign.Expression, arg_info);
     free(arg_node);
     return NULL;
 }
 
 node *FREEbinop(node * arg_node, info * arg_info) {
-    traverse_opt(BINOP_LEFT(arg_node), arg_info);
-    traverse_opt(BINOP_RIGHT(arg_node), arg_info);
+    traverse_opt(arg_node->N_binop.Left, arg_info);
+    traverse_opt(arg_node->N_binop.Right, arg_info);
     free(arg_node);
     return NULL;
 }
@@ -23,8 +23,8 @@ node *FREEbool(node * arg_node, info * arg_info) {
 }
 
 node *FREEdeclarations(node * arg_node, info * arg_info) {
-    traverse_opt(DECLARATIONS_NEXT(arg_node), arg_info);
-    traverse_opt(DECLARATIONS_DECLARATION(arg_node), arg_info);
+    traverse_opt(arg_node->N_declarations.Next, arg_info);
+    traverse_opt(arg_node->N_declarations.Declaration, arg_info);
     free(arg_node);
     return NULL;
 }
@@ -40,26 +40,26 @@ node *FREEint(node * arg_node, info * arg_info) {
 }
 
 node *FREEprogram(node * arg_node, info * arg_info) {
-    traverse_opt(PROGRAM_DECLARATIONS(arg_node), arg_info);
+    traverse_opt(arg_node->N_program.Declarations, arg_info);
     free(arg_node);
     return NULL;
 }
 
 node *FREEstatements(node * arg_node, info * arg_info) {
-    traverse_opt(STATEMENTS_NEXT(arg_node), arg_info);
-    traverse_opt(STATEMENTS_STATEMENT(arg_node), arg_info);
+    traverse_opt(arg_node->N_statements.Next, arg_info);
+    traverse_opt(arg_node->N_statements.Statement, arg_info);
     free(arg_node);
     return NULL;
 }
 
 node *FREEvar(node * arg_node, info * arg_info) {
-    free(VAR_NAME(arg_node));
+    free(arg_node->N_var.Name);
     free(arg_node);
     return NULL;
 }
 
 node *FREEvardec(node * arg_node, info * arg_info) {
-    traverse_opt(VARDEC_VAR(arg_node), arg_info);
+    traverse_opt(arg_node->N_vardec.Var, arg_info);
     free(arg_node);
     return NULL;
 }

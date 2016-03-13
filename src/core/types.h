@@ -68,7 +68,7 @@ struct NODE {
         struct {
             int Value;
         } N_int;
-    } attribs;
+    };
 };
 
 typedef struct GLOBALS_T {
@@ -95,30 +95,6 @@ typedef struct GLOBALS_T {
 
     bool changed;
 } globals_t;
-
-#define PROGRAM_DECLARATIONS(n) ((n)->attribs.N_program.Declarations)
-
-#define DECLARATIONS_DECLARATION(n) ((n)->attribs.N_declarations.Declaration)
-#define DECLARATIONS_NEXT(n) ((n)->attribs.N_declarations.Next)
-
-#define STATEMENTS_STATEMENT(n) ((n)->attribs.N_statements.Statement)
-#define STATEMENTS_NEXT(n) ((n)->attribs.N_statements.Next)
-
-#define ASSIGN_VAR(n) ((n)->attribs.N_assign.Var)
-#define ASSIGN_EXPRESSION(n) ((n)->attribs.N_assign.Expression)
-
-#define BINOP_LEFT(n) ((n)->attribs.N_binop.Left)
-#define BINOP_RIGHT(n) ((n)->attribs.N_binop.Right)
-#define BINOP_OP(n) ((n)->attribs.N_binop.Op)
-
-#define VARDEC_VAR(n) ((n)->attribs.N_vardec.Var)
-#define VARDEC_TYPE(n) ((n)->attribs.N_vardec.Type)
-
-#define VAR_NAME(n) ((n)->attribs.N_var.Name)
-
-#define INT_VALUE(n) ((n)->attribs.N_int.Value)
-#define FLOAT_VALUE(n) ((n)->attribs.N_float.Value)
-#define BOOL_VALUE(n) ((n)->attribs.N_bool.Value)
 
 globals_t global;
 char *nodetype_string(nodetype t);

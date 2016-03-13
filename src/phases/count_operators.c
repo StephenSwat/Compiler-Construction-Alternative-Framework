@@ -10,7 +10,7 @@ struct INFO {
 };
 
 node *count_operators_binop(node * arg_node, info * arg_info) {
-    switch (BINOP_OP(arg_node)) {
+    switch (arg_node->N_binop.Op) {
         case BO_add:
             arg_info->add++;
             break;
