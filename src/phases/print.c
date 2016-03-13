@@ -21,12 +21,12 @@ static char *print_type(typet type) {
     }
 }
 
-node *PRTprogram(node * arg_node, info * arg_info) {
+node *print_program(node * arg_node, info * arg_info) {
     traverse_init(arg_node->N_program.Declarations, arg_info);
     return arg_node;
 }
 
-node *PRTstatements(node * arg_node, info * arg_info) {
+node *print_statements(node * arg_node, info * arg_info) {
     logging_print_indent();
     traverse_init(arg_node->N_statements.Statement, arg_info);
     printf(";\n");
@@ -35,26 +35,26 @@ node *PRTstatements(node * arg_node, info * arg_info) {
     return arg_node;
 }
 
-node *PRTdeclarations(node * arg_node, info * arg_info) {
+node *print_declarations(node * arg_node, info * arg_info) {
     traverse_init(arg_node->N_declarations.Declaration, arg_info);
     traverse_opt(arg_node->N_declarations.Next, arg_info);
     return arg_node;
 }
 
-node *PRTvardec(node * arg_node, info * arg_info) {
+node *print_vardec(node * arg_node, info * arg_info) {
     printf("%s ", print_type(arg_node->N_vardec.Type));
     traverse_init(arg_node->N_vardec.Var, arg_info);
     return arg_node;
 }
 
-node *PRTassign(node * arg_node, info * arg_info) {
+node *print_assign(node * arg_node, info * arg_info) {
     traverse_init(arg_node->N_assign.Var, arg_info);
     printf(" = ");
     traverse_init(arg_node->N_assign.Expression, arg_info);
     return arg_node;
 }
 
-node *PRTbinop(node * arg_node, info * arg_info) {
+node *print_binop(node * arg_node, info * arg_info) {
     printf("(");
     traverse_init(arg_node->N_binop.Left, arg_info);
 
@@ -72,38 +72,38 @@ node *PRTbinop(node * arg_node, info * arg_info) {
     return arg_node;
 }
 
-node *PRTfloat(node * arg_node, info * arg_info) {
+node *print_float(node * arg_node, info * arg_info) {
     printf("%f", arg_node->N_float.Value);
     return arg_node;
 }
 
-node *PRTint(node * arg_node, info * arg_info) {
+node *print_int(node * arg_node, info * arg_info) {
     printf("%i", arg_node->N_int.Value);
     return arg_node;
 }
 
-node *PRTbool(node * arg_node, info * arg_info) {
+node *print_bool(node * arg_node, info * arg_info) {
     printf(arg_node->N_bool.Value ? "true" : "false");
     return arg_node;
 }
 
-node *PRTvar(node * arg_node, info * arg_info) {
+node *print_var(node * arg_node, info * arg_info) {
     printf("%s", arg_node->N_var.Name);
     return arg_node;
 }
 
 traverse_fun_t print_select_fun(node * arg_node) {
     switch (arg_node->nodetype) {
-        case N_assign: return PRTassign;
-        case N_binop: return PRTbinop;
-        case N_bool: return PRTbool;
-        case N_declarations: return PRTdeclarations;
-        case N_float: return PRTfloat;
-        case N_int: return PRTint;
-        case N_program: return PRTprogram;
-        case N_statements: return PRTstatements;
-        case N_var: return PRTvar;
-        case N_vardec: return PRTvardec;
+        case N_assign: return print_assign;
+        case N_binop: return print_binop;
+        case N_bool: return print_bool;
+        case N_declarations: return print_declarations;
+        case N_float: return print_float;
+        case N_int: return print_int;
+        case N_program: return print_program;
+        case N_statements: return print_statements;
+        case N_var: return print_var;
+        case N_vardec: return print_vardec;
         default: logging_log(ABORT, "This node has no print function!"); return NULL;
     }
 }
