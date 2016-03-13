@@ -4,8 +4,8 @@
 *.d
 
 # Bison and YACC files
-civic_lexer.*
-civic_parser.*
+civic.lexer.*
+civic.parser.*
 
 # Shit directories
 bin/
