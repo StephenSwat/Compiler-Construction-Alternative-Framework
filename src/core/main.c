@@ -93,11 +93,8 @@ void check_options(int argc, char **argv) {
     int opt;
     char *phase, *outfile = "-";
 
-    while ((opt = getopt(argc, argv, "htb:o:v:z:")) != -1) {
+    while ((opt = getopt(argc, argv, "hb:o:v:z:")) != -1) {
         switch (opt) {
-        case 't':
-            global.treecheck = true;
-            break;
         case 'b':
             if ((phase = strtok(optarg, ":")))
                 global.break_phase = phase;
@@ -141,14 +138,9 @@ void internal_error(int sig) {
     logging_log(ABORT, "The compiler encountered a critical error and will now exit.");
 }
 
-void user_interrupt(int sig) {
-    logging_log(ABORT, "The compiler caught a user interrupt and will now exit.");
-}
-
 int main(int argc, char *argv[]) {
     signal(SIGSEGV, internal_error);
     signal(SIGBUS, internal_error);
-    signal(SIGINT, user_interrupt);
 
     globals_init();
     check_options(argc, argv);

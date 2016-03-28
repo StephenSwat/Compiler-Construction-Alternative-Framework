@@ -4,33 +4,33 @@
 
 static traverse_choice_t travstack;
 
-node *traverse_none(node * arg_node, info * arg_info) {
-    return arg_node;
+node *traverse_none(node * this, info * info) {
+    return this;
 }
 
-node *traverse_sons(node * arg_node, info * arg_info) {
-    switch (arg_node->nodetype) {
+node *traverse_sons(node * this, info * info) {
+    switch (this->nodetype) {
         case N_program:
-            traverse_opt(arg_node->N_program.Declarations, arg_info);
+            traverse_opt(this->N_program.Declarations, info);
             break;
         case N_declarations:
-            traverse_opt(arg_node->N_declarations.Declaration, arg_info);
-            traverse_opt(arg_node->N_declarations.Next, arg_info);
+            traverse_opt(this->N_declarations.Declaration, info);
+            traverse_opt(this->N_declarations.Next, info);
             break;
         case N_statements:
-            traverse_opt(arg_node->N_statements.Statement, arg_info);
-            traverse_opt(arg_node->N_statements.Next, arg_info);
+            traverse_opt(this->N_statements.Statement, info);
+            traverse_opt(this->N_statements.Next, info);
             break;
         case N_assign:
-            traverse_opt(arg_node->N_assign.Var, arg_info);
-            traverse_opt(arg_node->N_assign.Expression, arg_info);
+            traverse_opt(this->N_assign.Var, info);
+            traverse_opt(this->N_assign.Expression, info);
             break;
         case N_binop:
-            traverse_opt(arg_node->N_binop.Left, arg_info);
-            traverse_opt(arg_node->N_binop.Right, arg_info);
+            traverse_opt(this->N_binop.Left, info);
+            traverse_opt(this->N_binop.Right, info);
             break;
         case N_vardec:
-            traverse_opt(arg_node->N_vardec.Var, arg_info);
+            traverse_opt(this->N_vardec.Var, info);
             break;
         case N_var:
         case N_int:
@@ -39,23 +39,23 @@ node *traverse_sons(node * arg_node, info * arg_info) {
             break;
     }
 
-    return arg_node;
+    return this;
 }
 
-node *traverse_init(node * arg_node, info * arg_info) {
-    global.line = arg_node->lineno;
-    global.col = arg_node->colno;
-    return travstack(arg_node)(arg_node, arg_info);
+node *traverse_init(node * this, info * info) {
+    global.line = this->lineno;
+    global.col = this->colno;
+    return travstack(this)(this, info);
 }
 
-node *traverse_opt(node * arg_node, info * arg_info) {
-    return arg_node ? traverse_init(arg_node, arg_info) : arg_node;
+node *traverse_opt(node * this, info * info) {
+    return this ? traverse_init(this, info) : this;
 }
 
-node *traverse_do(traverse_choice_t fun, node * arg_node, info * arg_info) {
+node *traverse_do(traverse_choice_t fun, node * this, info * info) {
     traverse_choice_t old = travstack;
     travstack = fun;
-    node *rv = traverse_init(arg_node, arg_info);
+    node *rv = traverse_init(this, info);
     travstack = old;
     return rv;
 }

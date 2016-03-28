@@ -9,38 +9,32 @@ struct INFO {
     int add, sub;
 };
 
-node *count_operators_binop(node * arg_node, info * arg_info) {
-    switch (arg_node->N_binop.Op) {
-        case BO_add:
-            arg_info->add++;
-            break;
-        case BO_sub:
-            arg_info->sub++;
-            break;
-        default:
-            break;
+node *count_operators_binop(node * this, info * info) {
+    switch (this->N_binop.Op) {
+        case BO_add: info->add++; break;
+        case BO_sub: info->sub++; break;
+        default: break;
     }
 
-    return traverse_sons(arg_node, arg_info);
+    return traverse_sons(this, info);
 }
 
-traverse_fun_t count_operators_select_fun(node * arg_node) {
-    switch (arg_node->nodetype) {
+traverse_fun_t count_operators_select_fun(node * this) {
+    switch (this->nodetype) {
         case N_binop: return count_operators_binop;
         default: return traverse_sons;
     }
 }
 
 node *count_operators_init(node * syntaxtree) {
-    info arg_info;
+    info info;
+    info.add = 0;
+    info.sub = 0;
 
-    arg_info.add = 0;
-    arg_info.sub = 0;
+    syntaxtree = traverse_do(count_operators_select_fun, syntaxtree, &info);
 
-    syntaxtree = traverse_do(count_operators_select_fun, syntaxtree, &arg_info);
-
-    logging_log(NOTE, "Number of add operators: %d", arg_info.add);
-    logging_log(NOTE, "Number of sub operators: %d", arg_info.sub);
+    logging_log(NOTE, "Number of add operators: %d", info.add);
+    logging_log(NOTE, "Number of sub operators: %d", info.sub);
 
     return syntaxtree;
 }

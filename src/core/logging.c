@@ -14,12 +14,13 @@
 int indent = 0;
 
 void logging_quit(bool success) {
-    logging_log(META, "Compilation %s with %d error%s, %d warning%s",
+    if (global.verbosity >= STATE) {
+        fprintf(stderr, "Compilation %s with %d error%s, %d warning%s\n",
                 (success ? "successful" : "failed"), global.errors,
                 global.errors == 1 ? "" : "s", global.warnings,
                 global.warnings == 1 ? "" : "s");
-
-    exit(success ? 0 : 1);
+    }
+    exit(!success);
 }
 
 void logging_indent(logging_t level) {
@@ -32,63 +33,59 @@ void logging_unindent(logging_t level) {
 
 void logging_print_indent(void) {
     for (int i = 0; i < indent; i++)
-        fprintf(stdout, "    ");
+        fprintf(stderr, "    ");
 }
 
-static void logging_log_helper(logging_t level, bool loc, const char *format, va_list arg_p) {
+void logging_log(logging_t level, const char *format, ...) {
     const char *header;
-    bool quit = false, indent = true;
+    bool quit = false, indent = true, loc = false;
+    va_list arg_p;
+    va_start(arg_p, format);
 
     if (global.verbosity >= level) {
         switch (level) {
         case WARNING:
+            loc = true;
             header = BOLDYELLOW "Warning: " RESET;
             global.warnings++;
             break;
         case ERROR:
+            loc = true;
             header = BOLDRED "Error: " RESET;
             global.errors++;
             break;
         case ABORT:
+            loc = true;
             header = BOLDRED "Abort: " RESET;
             global.errors++;
             quit = true;
             break;
         case NOTE:
+            loc = true;
             header = BOLDCYAN "Note: " RESET;
             break;
-        case META:
-            indent = false;
         default:
             header = "";
             break;
         }
 
-        if (indent) logging_print_indent();
-        printf("%s", header);
-
-        if (loc) {
-            printf(WHITE "%s:%d:%d: " RESET, global.currentfile, global.line, global.col);
+        if (indent) {
+            logging_print_indent();
         }
 
-        vprintf(format, arg_p);
-        printf("\n");
+        if (loc) {
+            fprintf(stderr, "%s", header);
+        }
+
+        if (loc && global.currentfile) {
+            fprintf(stderr, WHITE "%s:%d:%d: " RESET, global.currentfile, global.line, global.col);
+        }
+
+        vfprintf(stderr, format, arg_p);
+        fprintf(stderr, "\n");
     }
 
-    if (quit)
-        logging_quit(false);
-}
-
-void logging_log(logging_t level, const char *format, ...) {
-    va_list arg_p;
-    va_start(arg_p, format);
-    logging_log_helper(level, false, format, arg_p);
     va_end(arg_p);
-}
 
-void logging_line(logging_t level, const char *format, ...) {
-    va_list arg_p;
-    va_start(arg_p, format);
-    logging_log_helper(level, true, format, arg_p);
-    va_end(arg_p);
+    if (quit) logging_quit(false);
 }

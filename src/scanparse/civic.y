@@ -2,12 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <memory.h>
 #include <stdbool.h>
 #include "types.h"
 #include "logging.h"
 #include "alloc.h"
 
+FILE *yyin;
 static node *parseresult = NULL;
 extern int yylex(void);
 extern int yylex_destroy(void);
@@ -53,8 +56,20 @@ declaration
 %%
 
 static int yyerror(char *error) {
-    logging_line(ABORT, "Error parsing source code: %s\n", error);
+    logging_log(ABORT, "Error parsing source code: %s\n", error);
     return( 0);
+}
+
+node *load_file_init(node *syntax_tree) {
+    char cppcallstr[128];
+
+    if (access(global.infile, F_OK) == -1)
+        logging_log(ABORT, "Could not open file %s!", global.infile);
+
+    sprintf(cppcallstr, "gcc -o - -x c -E %s", global.infile);
+    yyin = popen(cppcallstr, "r");
+
+    return NULL;
 }
 
 node *parse_init(node *syntax_tree) {

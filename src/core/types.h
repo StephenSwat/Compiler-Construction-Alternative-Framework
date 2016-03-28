@@ -34,24 +34,20 @@ struct NODE {
     int lineno, colno;
     union {
         struct {
-            node *Var;
-            node *Expression;
+            node *Var, *Expression;
         } N_assign;
         struct {
             binop Op;
-            node *Left;
-            node *Right;
+            node *Left, *Right;
         } N_binop;
         struct {
-            node *Declaration;
-            node *Next;
+            node *Declaration, *Next;
         } N_declarations;
         struct {
             node *Declarations;
         } N_program;
         struct {
-            node *Statement;
-            node *Next;
+            node *Statement, *Next;
         } N_statements;
         struct {
             char *Name;
@@ -100,5 +96,3 @@ typedef struct GLOBALS_T {
 globals_t global;
 char *nodetype_string(nodetype t);
 char *type_string(typet t);
-bool isExpression(node *);
-bool isStatement(node *);

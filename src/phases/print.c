@@ -21,44 +21,44 @@ static char *print_type(typet type) {
     }
 }
 
-node *print_program(node * arg_node, info * arg_info) {
-    traverse_init(arg_node->N_program.Declarations, arg_info);
-    return arg_node;
+node *print_program(node * this, info * info) {
+    traverse_init(this->N_program.Declarations, info);
+    return this;
 }
 
-node *print_statements(node * arg_node, info * arg_info) {
+node *print_statements(node * this, info * info) {
     logging_print_indent();
-    traverse_init(arg_node->N_statements.Statement, arg_info);
+    traverse_init(this->N_statements.Statement, info);
     printf(";\n");
-    traverse_opt(arg_node->N_statements.Next, arg_info);
+    traverse_opt(this->N_statements.Next, info);
 
-    return arg_node;
+    return this;
 }
 
-node *print_declarations(node * arg_node, info * arg_info) {
-    traverse_init(arg_node->N_declarations.Declaration, arg_info);
-    traverse_opt(arg_node->N_declarations.Next, arg_info);
-    return arg_node;
+node *print_declarations(node * this, info * info) {
+    traverse_init(this->N_declarations.Declaration, info);
+    traverse_opt(this->N_declarations.Next, info);
+    return this;
 }
 
-node *print_vardec(node * arg_node, info * arg_info) {
-    printf("%s ", print_type(arg_node->N_vardec.Type));
-    traverse_init(arg_node->N_vardec.Var, arg_info);
-    return arg_node;
+node *print_vardec(node * this, info * info) {
+    printf("%s ", print_type(this->N_vardec.Type));
+    traverse_init(this->N_vardec.Var, info);
+    return this;
 }
 
-node *print_assign(node * arg_node, info * arg_info) {
-    traverse_init(arg_node->N_assign.Var, arg_info);
+node *print_assign(node * this, info * info) {
+    traverse_init(this->N_assign.Var, info);
     printf(" = ");
-    traverse_init(arg_node->N_assign.Expression, arg_info);
-    return arg_node;
+    traverse_init(this->N_assign.Expression, info);
+    return this;
 }
 
-node *print_binop(node * arg_node, info * arg_info) {
+node *print_binop(node * this, info * info) {
     printf("(");
-    traverse_init(arg_node->N_binop.Left, arg_info);
+    traverse_init(this->N_binop.Left, info);
 
-    switch (arg_node->N_binop.Op) {
+    switch (this->N_binop.Op) {
         case BO_add: printf(" + "); break;
         case BO_sub: printf(" - "); break;
         case BO_mul: printf(" * "); break;
@@ -66,34 +66,34 @@ node *print_binop(node * arg_node, info * arg_info) {
         case BO_mod: printf(" %% "); break;
     }
 
-    traverse_init(arg_node->N_binop.Right, arg_info);
+    traverse_init(this->N_binop.Right, info);
     printf(")");
 
-    return arg_node;
+    return this;
 }
 
-node *print_float(node * arg_node, info * arg_info) {
-    printf("%f", arg_node->N_float.Value);
-    return arg_node;
+node *print_float(node * this, info * info) {
+    printf("%f", this->N_float.Value);
+    return this;
 }
 
-node *print_int(node * arg_node, info * arg_info) {
-    printf("%i", arg_node->N_int.Value);
-    return arg_node;
+node *print_int(node * this, info * info) {
+    printf("%i", this->N_int.Value);
+    return this;
 }
 
-node *print_bool(node * arg_node, info * arg_info) {
-    printf(arg_node->N_bool.Value ? "true" : "false");
-    return arg_node;
+node *print_bool(node * this, info * info) {
+    printf(this->N_bool.Value ? "true" : "false");
+    return this;
 }
 
-node *print_var(node * arg_node, info * arg_info) {
-    printf("%s", arg_node->N_var.Name);
-    return arg_node;
+node *print_var(node * this, info * info) {
+    printf("%s", this->N_var.Name);
+    return this;
 }
 
-traverse_fun_t print_select_fun(node * arg_node) {
-    switch (arg_node->nodetype) {
+traverse_fun_t print_select_fun(node * this) {
+    switch (this->nodetype) {
         case N_assign: return print_assign;
         case N_binop: return print_binop;
         case N_bool: return print_bool;

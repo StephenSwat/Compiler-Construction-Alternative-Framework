@@ -17,4 +17,4 @@ void logging_indent(logging_t);
 void logging_unindent(logging_t);
 void logging_print_indent(void);
 void logging_log(logging_t, const char *, ...);
-void logging_line(logging_t, const char *, ...);
+void logging_log(logging_t, const char *, ...);

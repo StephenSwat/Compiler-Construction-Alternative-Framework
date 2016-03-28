@@ -4,13 +4,12 @@
 #define quit_phase (global.break_phase && !strcmp(global.break_phase, global.compiler_phase))
 #define quit_subphase (global.break_subphase && !strcmp(global.break_subphase, global.compiler_subphase))
 
-node *free_tree(node * arg_node);
+node *free_tree(node * this);
 node *count_operators_init(node *);
 node *load_file_init(node *);
 node *parse_init(node *);
 node *output_civvm_init(node *);
 node *print_init(node *);
-node *check_init(node *);
 
 node *phase_body(node * (fun) (node *), const char *name, node * syntax_tree, bool cond) {
     if (cond) {
@@ -20,8 +19,6 @@ node *phase_body(node * (fun) (node *), const char *name, node * syntax_tree, bo
         do {
             global.changed = false;
             syntax_tree = fun(syntax_tree);
-            if (global.errors > 0) logging_quit(false);
-            if (global.treecheck && syntax_tree) check_init(syntax_tree);
             if (global.errors > 0) logging_quit(false);
         } while (global.changed);
 
