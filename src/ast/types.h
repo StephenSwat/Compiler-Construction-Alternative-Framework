@@ -87,3 +87,4 @@ struct globals_t {
 struct globals_t global;
 char *nodetype_string(nodetype t);
 char *type_string(typet t);
+char *binop_string(binop t);

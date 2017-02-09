@@ -23,3 +23,22 @@ char *type_string(typet t) {
         default: return "unknown";
     }
 }
+
+char *binop_string(binop t) {
+    switch (t) {
+        case BO_add: return "+";
+        case BO_sub: return "-";
+        case BO_mul: return "*";
+        case BO_div: return "/";
+        case BO_mod: return "%";
+        case BO_lt: return "<";
+        case BO_le: return "<=";
+        case BO_gt: return ">";
+        case BO_ge: return ">=";
+        case BO_eq: return "==";
+        case BO_ne: return "!=";
+        case BO_and: return "&&";
+        case BO_or: return "||";
+        default: return "?";
+    }
+}
