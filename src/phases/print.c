@@ -32,7 +32,7 @@ static char *print_type(typet type) {
     }
 }
 
-struct INFO {
+struct info {
     char *colour;
 };
 

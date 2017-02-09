@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-typedef struct INFO info;
+typedef struct info info;
 
 typedef struct node node;
 

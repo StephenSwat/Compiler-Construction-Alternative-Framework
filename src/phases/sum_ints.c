@@ -2,7 +2,7 @@
 #include "logging.h"
 #include "traverse.h"
 
-struct INFO {
+struct info {
     int sum;
 };
 
