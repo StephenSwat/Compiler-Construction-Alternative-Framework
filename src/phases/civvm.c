@@ -4,7 +4,7 @@
 
 static traverse_fun_t output_civvm_select_fun(node * this) {
     switch (this->nodetype) {
-        default: return traverse_sons;
+        default: return traverse_children;
     }
 }
 

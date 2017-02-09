@@ -4,7 +4,7 @@
 #include "htable.h"
 
 static node *free_generic(node *this, info *info) {
-    traverse_sons(this, info);
+    traverse_children(this, info);
     free(this);
     return NULL;
 }

@@ -8,13 +8,13 @@ struct INFO {
 
 static node *sum_int(node * this, info * info) {
     info->sum += this->N_int.Value;
-    return traverse_sons(this, info);
+    return traverse_children(this, info);
 }
 
 traverse_fun_t sum_ints_select_fun(node * this) {
     switch (this->nodetype) {
         case N_int: return sum_int;
-        default: return traverse_sons;
+        default: return traverse_children;
     }
 }
 

@@ -8,13 +8,13 @@ static node *invert_binop(node *this, info *info) {
         this->N_binop.Op = BO_add;
     }
 
-    return traverse_sons(this, info);
+    return traverse_children(this, info);
 }
 
 traverse_fun_t invert_operators_select_fun(node *this) {
     switch (this->nodetype) {
         case N_binop: return invert_binop;
-        default: return traverse_sons;
+        default: return traverse_children;
     }
 }
 

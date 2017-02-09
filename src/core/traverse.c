@@ -8,7 +8,7 @@ node *traverse_none(node * this, info * info) {
     return this;
 }
 
-node *traverse_sons(node * this, info * info) {
+node *traverse_children(node * this, info * info) {
     switch (this->nodetype) {
         case N_program:
             traverse_init(this->N_program.Statements, info);
