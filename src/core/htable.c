@@ -29,7 +29,7 @@ void htable_free(htable_t * t) {
     free(t);
 }
 
-unsigned int htable_hash_fun(char *key) {
+static unsigned int htable_hash_fun(char *key) {
     /* This is the djb2 algorithm as found for hashing strings.
      * Source: http://www.cse.yorku.ca/~oz/hash.html
      */
@@ -43,11 +43,11 @@ unsigned int htable_hash_fun(char *key) {
     return hash;
 }
 
-unsigned int htable_hash(htable_t * t, char *key) {
+static unsigned int htable_hash(htable_t * t, char *key) {
     return htable_hash_fun(key) % t->size;
 }
 
-htable_entry_t *htable_entry_init(char *key, void *value) {
+static htable_entry_t *htable_entry_init(char *key, void *value) {
     htable_entry_t *entry = (htable_entry_t *) malloc(sizeof(htable_entry_t));
 
     entry->key = strdup(key);
