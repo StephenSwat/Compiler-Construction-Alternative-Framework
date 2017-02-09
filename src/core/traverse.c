@@ -46,9 +46,6 @@ node *traverse_init(node * this, info * info) {
 }
 
 node *traverse_do(traverse_choice_t fun, node * this, info * info) {
-    traverse_choice_t old = travstack;
     travstack = fun;
-    node *rv = traverse_init(this, info);
-    travstack = old;
-    return rv;
+    return traverse_init(this, info);
 }

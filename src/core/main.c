@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
     check_options(argc, argv);
 
     if (global.break_phase)
-        logging_log(STATE, "Compiler will exit after %s:%s\n", global.break_phase, global.break_subphase);
+        logging_log(STATE, "Compiler will exit after %s\n", global.break_phase);
 
     phase_run();
 

@@ -4,7 +4,7 @@
 
 typedef struct INFO info;
 
-typedef struct NODE node;
+typedef struct node node;
 
 typedef char *compiler_phase_t;
 
@@ -29,7 +29,7 @@ typedef enum {
     N_program, N_statements, N_assign, N_binop, N_var, N_int, N_float, N_bool
 } nodetype;
 
-struct NODE {
+struct node {
     nodetype nodetype;
     int lineno, colno;
     union {
@@ -61,9 +61,8 @@ struct NODE {
     };
 };
 
-typedef struct GLOBALS_T {
+struct globals_t {
     compiler_phase_t compiler_phase;
-    compiler_phase_t compiler_subphase;
     bool treecheck;
     bool ast_colour;
 
@@ -72,7 +71,6 @@ typedef struct GLOBALS_T {
     int warnings;
 
     compiler_phase_t break_phase;
-    compiler_phase_t break_subphase;
 
     char *infile;
     FILE *outfile;
@@ -84,8 +82,8 @@ typedef struct GLOBALS_T {
     backend_t backend;
 
     bool changed;
-} globals_t;
+};
 
-globals_t global;
+struct globals_t global;
 char *nodetype_string(nodetype t);
 char *type_string(typet t);
