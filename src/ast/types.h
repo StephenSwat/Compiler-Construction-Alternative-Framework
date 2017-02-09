@@ -13,7 +13,7 @@ typedef node *(*traverse_fun_t)(node *, info*);
 typedef traverse_fun_t (*traverse_choice_t)(node *);
 
 typedef enum {
-    BE_civvm, BE_none
+    BE_civvm, BE_dot, BE_none
 } backend_t;
 
 typedef enum {

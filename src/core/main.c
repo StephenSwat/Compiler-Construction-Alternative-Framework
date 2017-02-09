@@ -106,6 +106,8 @@ void check_options(int argc, char **argv) {
         case 'z':
             if (!strcmp(optarg, "civvm")) {
                 global.backend = BE_civvm;
+            } else if (!strcmp(optarg, "dot")) {
+                global.backend = BE_dot;
             } else if (!strcmp(optarg, "none")) {
                 global.backend = BE_none;
             } else {
