@@ -21,13 +21,12 @@ inside and out just to remove as much of the code as possible. The result is the
 alternative framework that you are looking at right now. I've stripped it down
 to be as basic (or even more basic) than the official compiler framework, as to
 not give away any of the answers. This *lite* version of the framework clocks in
-at 1100 lines of code in 23 files and you have full control over every single
+at 900 lines of code in 20 files and you have full control over every single
 one.
 
 ## Goals
 
  * Get rid of as much unnecessary code from the framework as possible.
- * Rewrite the framework extensively to distribute it under a free license.
  * Make the framework easy to understand using by mostly basic C features.
  * Increase compilation speed and lower complexity by removing generated code.
  * Provide good documentation, something the old framework lacks severely.
