@@ -3,11 +3,9 @@
 char *nodetype_string(nodetype t) {
     switch (t) {
         case N_program: return "program";
-        case N_declarations: return "declarations";
         case N_statements: return "statements";
         case N_assign: return "assign";
         case N_binop: return "binop";
-        case N_vardec: return "vardec";
         case N_var: return "var";
         case N_int: return "int";
         case N_float: return "float";

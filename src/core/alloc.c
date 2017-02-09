@@ -11,20 +11,14 @@ static node *alloc_node(nodetype type) {
     return result;
 }
 
-node *alloc_program(node * Declarations) {
+node *alloc_program(node * Statements) {
     node *this = alloc_node(N_program);
-    this->N_program.Declarations = Declarations;
-    return this;
-}
-
-node *alloc_declarations(node * Declaration, node * Next) {
-    node *this = alloc_node(N_declarations);
-    this->N_declarations.Declaration = Declaration;
-    this->N_declarations.Next = Next;
+    this->N_program.Statements = Statements;
     return this;
 }
 
 node *alloc_statements(node * Statement, node * Next) {
+    // You could add some typechecking here
     node *this = alloc_node(N_statements);
     this->N_statements.Statement = Statement;
     this->N_statements.Next = Next;
@@ -47,14 +41,7 @@ node *alloc_binop(binop Op, node * Left, node * Right) {
     return this;
 }
 
-node *alloc_vardec(typet Type, node * Var) {
-    node *this = alloc_node(N_vardec);
-    this->N_vardec.Var = Var;
-    this->N_vardec.Type = Type;
-    return this;
-}
-
-node *alloc_var(char *Name, node * Index, node * Next) {
+node *alloc_var(char *Name, node * Next) {
     node *this = alloc_node(N_var);
     this->N_var.Name = Name;
     return this;

@@ -11,26 +11,19 @@ node *traverse_none(node * this, info * info) {
 node *traverse_sons(node * this, info * info) {
     switch (this->nodetype) {
         case N_program:
-            traverse_opt(this->N_program.Declarations, info);
-            break;
-        case N_declarations:
-            traverse_opt(this->N_declarations.Declaration, info);
-            traverse_opt(this->N_declarations.Next, info);
+            traverse_init(this->N_program.Statements, info);
             break;
         case N_statements:
-            traverse_opt(this->N_statements.Statement, info);
-            traverse_opt(this->N_statements.Next, info);
+            traverse_init(this->N_statements.Statement, info);
+            traverse_init(this->N_statements.Next, info);
             break;
         case N_assign:
-            traverse_opt(this->N_assign.Var, info);
-            traverse_opt(this->N_assign.Expression, info);
+            traverse_init(this->N_assign.Var, info);
+            traverse_init(this->N_assign.Expression, info);
             break;
         case N_binop:
-            traverse_opt(this->N_binop.Left, info);
-            traverse_opt(this->N_binop.Right, info);
-            break;
-        case N_vardec:
-            traverse_opt(this->N_vardec.Var, info);
+            traverse_init(this->N_binop.Left, info);
+            traverse_init(this->N_binop.Right, info);
             break;
         case N_var:
         case N_int:
@@ -43,13 +36,13 @@ node *traverse_sons(node * this, info * info) {
 }
 
 node *traverse_init(node * this, info * info) {
-    global.line = this->lineno;
-    global.col = this->colno;
-    return travstack(this)(this, info);
-}
-
-node *traverse_opt(node * this, info * info) {
-    return this ? traverse_init(this, info) : this;
+    if (this) {
+        global.line = this->lineno;
+        global.col = this->colno;
+        return travstack(this)(this, info);
+    } else {
+        return NULL;
+    }
 }
 
 node *traverse_do(traverse_choice_t fun, node * this, info * info) {

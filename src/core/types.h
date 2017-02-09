@@ -21,12 +21,12 @@ typedef enum {
 } typet;
 
 typedef enum {
-    BO_add, BO_sub, BO_mul, BO_div, BO_mod
+    BO_add, BO_sub, BO_mul, BO_div, BO_mod, BO_lt, BO_le, BO_gt, BO_ge, BO_eq,
+    BO_ne, BO_and, BO_or
 } binop;
 
 typedef enum {
-    N_program, N_declarations, N_statements, N_assign, N_binop, N_vardec,
-    N_var, N_int, N_float, N_bool
+    N_program, N_statements, N_assign, N_binop, N_var, N_int, N_float, N_bool
 } nodetype;
 
 struct NODE {
@@ -41,10 +41,7 @@ struct NODE {
             node *Left, *Right;
         } N_binop;
         struct {
-            node *Declaration, *Next;
-        } N_declarations;
-        struct {
-            node *Declarations;
+            node *Statements;
         } N_program;
         struct {
             node *Statement, *Next;
@@ -52,10 +49,6 @@ struct NODE {
         struct {
             char *Name;
         } N_var;
-        struct {
-            typet Type;
-            node *Var;
-        } N_vardec;
         struct {
             float Value;
         } N_float;

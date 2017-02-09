@@ -63,6 +63,8 @@
 "&&"                       { FILTER(AND);    }
 "||"                       { FILTER(OR);    }
 
+"="                        { FILTER('=');    }
+
 "true"                     { FILTER(TRUE); }
 "false"                    { FILTER(FALSE); }
 

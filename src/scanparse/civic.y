@@ -34,24 +34,60 @@ static int yyerror(char *errname);
 %token <cfloat> FLOAT
 %token <id> ID
 
-%type <node> program declarations declaration
+%type <node> program assign expression constant statement statements
+%type <cbinop> binop
+%type <id> var
 
 %start program
 
 %%
 
 program
-    : declarations { parseresult = alloc_program($1); }
+    : statements { parseresult = alloc_program($1); }
     ;
 
-declarations
-    : declaration declarations { $$ = alloc_declarations($1, $2); }
-    | %empty { $$ = NULL; }
+statements
+    : statement statements { $$ = alloc_statements($1, $2); }
+    | %empty { $$ = NULL; };
+
+statement
+    : assign ';'
+
+var
+    : ID
     ;
 
-declaration
-    : AND { $$ = NULL; } // This is clearly wrong.
+expression
+    : '(' expression binop expression ')' { $$ = alloc_binop($3, $2, $4); }
+    | var { $$ = alloc_var($1, NULL); }
+    | constant { $$ = $1; }
     ;
+
+binop
+    : LE { $$ = BO_le; }
+    | LT { $$ = BO_lt; }
+    | GE { $$ = BO_ge; }
+    | GT { $$ = BO_gt; }
+    | EQ { $$ = BO_eq; }
+    | NE { $$ = BO_ne; }
+    | OR { $$ = BO_or; }
+    | AND { $$ = BO_and; }
+    | '+' { $$ = BO_add; }
+    | '-' { $$ = BO_sub; }
+    | '*' { $$ = BO_mul; }
+    | '/' { $$ = BO_div; }
+    | '%' { $$ = BO_mod; }
+    ;
+
+assign
+    : var '=' expression { $$ = alloc_assign(alloc_var($1, NULL), $3); }
+    ;
+
+constant
+    : FLOAT { $$ = alloc_float($1); }
+    | INT { $$ = alloc_int($1); }
+    | TRUE { $$ = alloc_bool(true); }
+    | FALSE { $$ = alloc_bool(false); };
 
 %%
 
