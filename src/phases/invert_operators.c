@@ -2,12 +2,8 @@
 #include "traverse.h"
 
 static node *invert_binop(node *this, info *info) {
-    if (this->N_binop.Op == BO_add) {
-        this->N_binop.Op = BO_sub;
-    } else if (this->N_binop.Op == BO_sub) {
-        this->N_binop.Op = BO_add;
-    }
-
+    if (this->N_binop.Op == BO_add) this->N_binop.Op = BO_sub;
+    else if (this->N_binop.Op == BO_sub) this->N_binop.Op = BO_add;
     return traverse_children(this, info);
 }
 

@@ -16,22 +16,6 @@
 #define MAGENTA          "\033[35m" // Used for expressions
 #define CYAN             "\033[36m" // Used for variables
 
-static char *print_type(typet type) {
-    switch (type) {
-        case TY_int:
-            return "int";
-        case TY_bool:
-            return "bool";
-        case TY_float:
-            return "float";
-        case TY_void:
-            return "void";
-        default:
-            logging_log(ABORT, "Unknown types should not exist in the AST.");
-            return NULL;
-    }
-}
-
 struct info {
     char *colour;
 };
@@ -65,23 +49,7 @@ node *print_binop(node * this, info * info) {
     CSTACK_PUSH(MAGENTA);
     fprintf(stderr, "(");
     traverse_init(this->N_binop.Left, info);
-
-    switch (this->N_binop.Op) {
-        case BO_add: fprintf(stderr, " + "); break;
-        case BO_sub: fprintf(stderr, " - "); break;
-        case BO_mul: fprintf(stderr, " * "); break;
-        case BO_div: fprintf(stderr, " / "); break;
-        case BO_mod: fprintf(stderr, " %% "); break;
-        case BO_lt: fprintf(stderr, " < "); break;
-        case BO_le: fprintf(stderr, " <= "); break;
-        case BO_gt: fprintf(stderr, " > "); break;
-        case BO_ge: fprintf(stderr, " >= "); break;
-        case BO_eq: fprintf(stderr, " == "); break;
-        case BO_ne: fprintf(stderr, " != "); break;
-        case BO_or: fprintf(stderr, " || "); break;
-        case BO_and: fprintf(stderr, " && "); break;
-    }
-
+    fprintf(stderr, " %s ", binop_string(this->N_binop.Op));
     traverse_init(this->N_binop.Right, info);
     fprintf(stderr, ")");
     CSTACK_POP();
