@@ -17,7 +17,7 @@ typedef enum {
 } backend_t;
 
 typedef enum {
-    TY_bool, TY_int, TY_float, TY_void, TY_unknown
+    TY_bool, TY_int, TY_float, TY_void
 } typet;
 
 typedef enum {
