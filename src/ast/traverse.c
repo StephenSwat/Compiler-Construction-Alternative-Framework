@@ -11,24 +11,21 @@ node *traverse_none(node * this, info * info) {
 node *traverse_children(node * this, info * info) {
     switch (this->nodetype) {
         case N_program:
-            traverse_init(this->N_program.Statements, info);
+            this->N_program.Statements = traverse_init(this->N_program.Statements, info);
             break;
         case N_statements:
-            traverse_init(this->N_statements.Statement, info);
-            traverse_init(this->N_statements.Next, info);
+            this->N_statements.Statement = traverse_init(this->N_statements.Statement, info);
+            this->N_statements.Next = traverse_init(this->N_statements.Next, info);
             break;
         case N_assign:
-            traverse_init(this->N_assign.Var, info);
-            traverse_init(this->N_assign.Expression, info);
+            this->N_assign.Var = traverse_init(this->N_assign.Var, info);
+            this->N_assign.Expression = traverse_init(this->N_assign.Expression, info);
             break;
         case N_binop:
-            traverse_init(this->N_binop.Left, info);
-            traverse_init(this->N_binop.Right, info);
+            this->N_binop.Left = traverse_init(this->N_binop.Left, info);
+            this->N_binop.Right = traverse_init(this->N_binop.Right, info);
             break;
-        case N_var:
-        case N_int:
-        case N_float:
-        case N_bool:
+        default:
             break;
     }
 
