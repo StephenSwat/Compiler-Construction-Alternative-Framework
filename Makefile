@@ -21,11 +21,11 @@ clean:
 	@$(CC) $(CFLAGS) $(patsubst %,-I%,$(SOURCE_DIRS)) -o $@ -c $<
 
 %.lexer.c: $(LEXER:.lexer.c=.l)
-	@echo "Generating source code from LEX specification: $(notdir $@)"
+	@echo "Generating source code from Lex specification: $(notdir $@)"
 	@flex -o $@ $<
 
 %.parser.c: $(PARSER:.parser.c=.y)
-	@echo "Generating source code from YACC specification: $(notdir $@)"
+	@echo "Generating source code from Yacc specification: $(notdir $@)"
 	@bison -dv -o $@ $<
 
 test: civicc
