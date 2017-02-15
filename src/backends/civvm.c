@@ -2,13 +2,11 @@
 #include "types.h"
 #include "traverse.h"
 
-static traverse_fun_t output_civvm_select_fun(node * this) {
-    switch (this->nodetype) {
-        default: return traverse_children;
-    }
-}
-
 node *output_civvm_init(node * syntaxtree) {
-    syntaxtree = traverse_do(output_civvm_select_fun, syntaxtree, NULL);
+    traverse_fun_t select_fun(node * this) {
+        return traverse_children;
+    }
+
+    syntaxtree = traverse_do(select_fun, syntaxtree, NULL);
     return syntaxtree;
 }

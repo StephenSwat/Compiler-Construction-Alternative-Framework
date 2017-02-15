@@ -15,13 +15,13 @@ static node *free_var(node * this, info * info) {
     return NULL;
 }
 
-traverse_fun_t free_select_fun(node * this) {
-    switch (this->nodetype) {
-        case N_var: return free_var;
-        default: return free_generic;
-    }
-}
-
 node *free_tree(node * free_node) {
-    return traverse_do(free_select_fun, free_node, NULL);
+    traverse_fun_t select_fun(node * this) {
+        switch (this->nodetype) {
+            case N_var: return free_var;
+            default: return free_generic;
+        }
+    }
+
+    return traverse_do(select_fun, free_node, NULL);
 }

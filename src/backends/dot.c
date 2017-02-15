@@ -45,16 +45,16 @@ static node *output_dot_generic(node *this, info * info) {
     return this;
 }
 
-static traverse_fun_t output_dot_select_fun(node * this) {
-    return output_dot_generic;
-}
-
 node *output_dot_init(node * syntaxtree) {
+    traverse_fun_t select_fun(node * this) {
+        return output_dot_generic;
+    }
+
     info info = { NULL };
 
     fprintf(global.outfile, "digraph \"%s\" {\n", global.infile);
     fprintf(global.outfile, "node [shape=box]\n");
-    traverse_do(output_dot_select_fun, syntaxtree, &info);
+    traverse_do(select_fun, syntaxtree, &info);
     fprintf(global.outfile, "}\n");
 
     return syntaxtree;

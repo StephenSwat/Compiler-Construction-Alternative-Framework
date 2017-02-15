@@ -1,5 +1,5 @@
 CC           := gcc
-CFLAGS       := -Wall -std=gnu11 -Og -g -D_GNU_SOURCE -pedantic -MMD
+CFLAGS       := -Wall -std=gnu11 -Og -g -D_GNU_SOURCE -MMD
 SOURCE_DIRS   = src/core/ src/phases/ src/scanparse/ src/ast/ src/backends/
 SRC           = $(foreach dir,$(SOURCE_DIRS),$(wildcard $(dir)*.c))
 PARSER        = src/scanparse/civic.parser.c

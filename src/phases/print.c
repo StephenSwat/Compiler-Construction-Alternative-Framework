@@ -117,21 +117,22 @@ node *print_var(node * this, info * info) {
     return this;
 }
 
-traverse_fun_t print_select_fun(node * this) {
-    switch (this->nodetype) {
-        case N_assign: return print_assign;
-        case N_binop: return print_binop;
-        case N_bool: return print_bool;
-        case N_float: return print_float;
-        case N_int: return print_int;
-        case N_program: return print_program;
-        case N_statements: return print_statements;
-        case N_var: return print_var;
-        default: logging_log(ABORT, "This node has no print function!"); return NULL;
+node *print_init(node * syntaxtree) {
+    traverse_fun_t select_fun(node * this) {
+        switch (this->nodetype) {
+            case N_assign: return print_assign;
+            case N_binop: return print_binop;
+            case N_bool: return print_bool;
+            case N_float: return print_float;
+            case N_int: return print_int;
+            case N_program: return print_program;
+            case N_statements: return print_statements;
+            case N_var: return print_var;
+            default: logging_log(ABORT, "This node has no print function!"); return NULL;
+        }
     }
-}
 
-node *print_init(node * syntaxtree) {info info;
-    info.colour = RESET;
-    return traverse_do(print_select_fun, syntaxtree, &info);
+    info info = { RESET };
+
+    return traverse_do(select_fun, syntaxtree, &info);
 }
