@@ -54,7 +54,7 @@ node *output_dot_init(node * syntaxtree) {
 
     fprintf(global.outfile, "digraph \"%s\" {\n", global.infile);
     fprintf(global.outfile, "node [shape=box]\n");
-    traverse_do(select_fun, syntaxtree, &info);
+    syntaxtree = traverse_do(select_fun, syntaxtree, &info);
     fprintf(global.outfile, "}\n");
 
     return syntaxtree;

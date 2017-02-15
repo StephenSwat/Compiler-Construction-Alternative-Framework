@@ -7,6 +7,5 @@ node *output_civvm_init(node * syntaxtree) {
         return traverse_children;
     }
 
-    syntaxtree = traverse_do(select_fun, syntaxtree, NULL);
-    return syntaxtree;
+    return traverse_do(select_fun, syntaxtree, NULL);
 }
