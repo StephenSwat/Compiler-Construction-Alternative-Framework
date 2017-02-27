@@ -61,30 +61,6 @@ struct node {
     };
 };
 
-struct globals_t {
-    compiler_phase_t compiler_phase;
-    bool treecheck;
-    bool ast_colour;
-
-    int verbosity;
-    int errors;
-    int warnings;
-
-    compiler_phase_t break_phase;
-
-    char *infile;
-    FILE *outfile;
-    char *currentfile;
-
-    int line;
-    int col;
-
-    backend_t backend;
-
-    bool changed;
-};
-
-struct globals_t global;
 char *nodetype_string(nodetype t);
 char *type_string(typet t);
 char *binop_string(binop t);

@@ -12,6 +12,9 @@ typedef enum {
     NOTE = 3
 } logging_t;
 
+extern int verbosity;
+extern int errors;
+
 void logging_quit(bool);
 void logging_indent(logging_t);
 void logging_unindent(logging_t);

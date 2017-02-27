@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "logging.h"
+#include "main.h"
 
 #define RESET       "\033[0m"
 #define WHITE       "\033[37m"
@@ -11,24 +12,27 @@
 #define BOLDYELLOW  "\033[1m\033[33m"
 #define BOLDCYAN    "\033[1m\033[36m"
 
+int verbosity = 2;
+int errors = 0;
+int warnings = 0;
 int indent = 0;
 
 void logging_quit(bool success) {
-    if (global.verbosity >= STATE) {
+    if (verbosity >= STATE) {
         fprintf(stderr, "Compilation %s with %d error%s, %d warning%s\n",
-                (success ? "successful" : "failed"), global.errors,
-                global.errors == 1 ? "" : "s", global.warnings,
-                global.warnings == 1 ? "" : "s");
+                (success ? "successful" : "failed"), errors,
+                errors == 1 ? "" : "s", warnings,
+                warnings == 1 ? "" : "s");
     }
     exit(!success);
 }
 
 void logging_indent(logging_t level) {
-    if (global.verbosity >= level) indent++;
+    if (verbosity >= level) indent++;
 }
 
 void logging_unindent(logging_t level) {
-    if (global.verbosity >= level) indent--;
+    if (verbosity >= level) indent--;
 }
 
 void logging_print_indent(void) {
@@ -42,22 +46,22 @@ void logging_log(logging_t level, const char *format, ...) {
     va_list arg_p;
     va_start(arg_p, format);
 
-    if (global.verbosity >= level) {
+    if (verbosity >= level) {
         switch (level) {
         case WARNING:
             loc = true;
             header = BOLDYELLOW "Warning: " RESET;
-            global.warnings++;
+            warnings++;
             break;
         case ERROR:
             loc = true;
             header = BOLDRED "Error: " RESET;
-            global.errors++;
+            errors++;
             break;
         case ABORT:
             loc = true;
             header = BOLDRED "Abort: " RESET;
-            global.errors++;
+            errors++;
             quit = true;
             break;
         case NOTE:
@@ -77,8 +81,8 @@ void logging_log(logging_t level, const char *format, ...) {
             fprintf(stderr, "%s", header);
         }
 
-        if (loc && global.currentfile) {
-            fprintf(stderr, WHITE "%s:%d:%d: " RESET, global.currentfile, global.line, global.col);
+        if (loc && currentfile) {
+            fprintf(stderr, WHITE "%s:%d:%d: " RESET, currentfile, line, col);
         }
 
         vfprintf(stderr, format, arg_p);

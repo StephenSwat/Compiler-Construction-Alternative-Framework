@@ -5,8 +5,8 @@
 #include "logging.h"
 #include "alloc.h"
 
-#define CSTACK_PUSH(c) char *old_c = info->colour; info->colour = c; if (global.ast_colour) fprintf(stderr, "%s", info->colour);
-#define CSTACK_POP() info->colour = old_c; if (global.ast_colour) fprintf(stderr, "%s", info->colour);
+#define CSTACK_PUSH(c) char *old_c = info->colour; info->colour = c; if (ast_colour) fprintf(stderr, "%s", info->colour);
+#define CSTACK_POP() info->colour = old_c; if (ast_colour) fprintf(stderr, "%s", info->colour);
 
 #define RESET            "\033[39m" // Used for returning to normal
 #define RED              "\033[31m" // used for statements
@@ -15,6 +15,8 @@
 #define BLUE             "\033[34m" // Used for variable declarations
 #define MAGENTA          "\033[35m" // Used for expressions
 #define CYAN             "\033[36m" // Used for variables
+
+bool ast_colour = true;
 
 struct info {
     char *colour;

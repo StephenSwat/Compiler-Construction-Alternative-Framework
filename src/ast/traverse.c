@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "traverse.h"
 #include "alloc.h"
+#include "main.h"
 
 static traverse_choice_t travstack;
 
@@ -34,8 +35,8 @@ node *traverse_children(node * this, info * info) {
 
 node *traverse_init(node * this, info * info) {
     if (this) {
-        global.line = this->lineno;
-        global.col = this->colno;
+        line = this->lineno;
+        col = this->colno;
         return travstack(this)(this, info);
     } else {
         return NULL;

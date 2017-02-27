@@ -4,8 +4,21 @@
 #include <signal.h>
 #include <getopt.h>
 #include "logging.h"
+#include "phase.h"
+#include "main.h"
 
 node *phase_run();
+
+char *infile = NULL;
+FILE *outfile = NULL;
+char *currentfile = NULL;
+
+int line = 1;
+int col = 1;
+
+backend_t backend = BE_civvm;
+
+extern bool ast_colour;
 
 void print_usage() {
     printf("Usage: civicc [options] file\n");
@@ -43,7 +56,7 @@ void print_usage() {
         "    2 : Display state messages, such as the intro message and the current\n"
         "        compiler phase.\n"
         "    3 : Display notes which provide insight into non-critical optimizations\n"
-        "        and other processes.\n", global.verbosity);
+        "        and other processes.\n", verbosity);
 
     fprintf(stderr,
         "\nBREAK OPTIONS:\n"
@@ -64,52 +77,31 @@ void print_usage() {
         "    frt : De-allocating syntax tree representation\n");
 }
 
-void globals_init() {
-    global.compiler_phase = NULL;
-    global.ast_colour = true;
-
-    global.verbosity = 2;
-    global.errors = 0;
-    global.warnings = 0;
-
-    global.break_phase = NULL;
-
-    global.infile = NULL;
-    global.outfile = NULL;
-    global.currentfile = NULL;
-
-    global.line = 1;
-    global.col = 1;
-
-    global.backend = BE_civvm;
-}
-
-
 void check_options(int argc, char **argv) {
     int opt;
-    char *outfile = "-";
+    char *outfile_str = "-";
 
     while ((opt = getopt(argc, argv, "hub:o:v:z:")) != -1) {
         switch (opt) {
         case 'b':
-            global.break_phase = optarg;
+            break_phase = optarg;
             break;
         case 'v':
-            global.verbosity = atoi(optarg);
+            verbosity = atoi(optarg);
             break;
         case 'u':
-            global.ast_colour = false;
+            ast_colour = false;
             break;
         case 'o':
-            outfile = optarg;
+            outfile_str = optarg;
             break;
         case 'z':
             if (!strcmp(optarg, "civvm")) {
-                global.backend = BE_civvm;
+                backend = BE_civvm;
             } else if (!strcmp(optarg, "dot")) {
-                global.backend = BE_dot;
+                backend = BE_dot;
             } else if (!strcmp(optarg, "none")) {
-                global.backend = BE_none;
+                backend = BE_none;
             } else {
                 logging_log(ABORT, "Backend '%s' is not implemented.", optarg);
             }
@@ -122,12 +114,12 @@ void check_options(int argc, char **argv) {
         }
     }
 
-    global.outfile = strcmp(outfile, "-") ? fopen(outfile, "w") : stdout;
+    outfile = strcmp(outfile_str, "-") ? fopen(outfile_str, "w") : stdout;
 
     for (int i = optind; i < argc; i++)
-        global.infile = argv[i];
+        infile = argv[i];
 
-    if (!global.infile) {
+    if (!infile) {
         logging_log(ABORT, "No input file was supplied.");
     }
 }
@@ -140,14 +132,13 @@ int main(int argc, char *argv[]) {
     signal(SIGSEGV, internal_error);
     signal(SIGBUS, internal_error);
 
-    globals_init();
     check_options(argc, argv);
 
-    if (global.break_phase)
-        logging_log(STATE, "Compiler will exit after %s\n", global.break_phase);
+    if (break_phase)
+        logging_log(STATE, "Compiler will exit after %s\n", break_phase);
 
     phase_run();
 
-    free(global.currentfile);
+    free(currentfile);
     logging_quit(true);
 }

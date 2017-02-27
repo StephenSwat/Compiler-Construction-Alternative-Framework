@@ -2,12 +2,13 @@
 #include <string.h>
 #include "alloc.h"
 #include "logging.h"
+#include "main.h"
 
 static node *alloc_node(nodetype type) {
     node *result = (node *) malloc(sizeof(node));
     result->nodetype = type;
-    result->lineno = global.line;
-    result->colno = global.col;
+    result->lineno = line;
+    result->colno = col;
     return result;
 }
 
