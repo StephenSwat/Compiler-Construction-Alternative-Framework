@@ -29,8 +29,8 @@ void print_usage() {
 
     fprintf(stderr,
         "\nGENERAL OPTIONS:\n"
-        "    <filename>      Name of program file to compile.\n"
-        "    -o <filename>   Name of output file. Using '-' selects standard out.\n"
+        "    <filename>      name of program file to compile.\n"
+        "    -o <filename>   name of output file. Using '-' selects standard out.\n"
         "    -u              Disable syntax colouring for the printed AST.\n");
 
     fprintf(stderr,
@@ -38,7 +38,7 @@ void print_usage() {
         "    civicc has support for modular backends. Currently, only the Civilised C\n"
         "    virtual machine and the dot graph language are implemented. To specify a\n"
         "    backend to use, use the following option:\n\n"
-        "    -z <backend>    Name of program file to compile (default civvm).\n\n"
+        "    -z <backend>    name of program file to compile (default civvm).\n\n"
         "    To use the Civilised C virtual machine backend, specify 'civvm'. You can\n"
         "    also turn off output by using 'none'.\n\n");
 

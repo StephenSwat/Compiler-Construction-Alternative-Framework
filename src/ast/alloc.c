@@ -12,56 +12,56 @@ static node *alloc_node(nodetype_t type) {
     return result;
 }
 
-node *alloc_program(node * Statements) {
-    node *this = alloc_node(N_program);
-    this->N_program.Statements = Statements;
+node *alloc_program(node * statements) {
+    node *this = alloc_node(program_n);
+    this->program_n.statements = statements;
     return this;
 }
 
-node *alloc_statements(node * Statement, node * Next) {
+node *alloc_statements(node * statement, node * next) {
     // You could add some typechecking here
-    node *this = alloc_node(N_statements);
-    this->N_statements.Statement = Statement;
-    this->N_statements.Next = Next;
+    node *this = alloc_node(statements_n);
+    this->statements_n.statement = statement;
+    this->statements_n.next = next;
     return this;
 }
 
-node *alloc_assign(node * Var, node * Expression) {
-    if (!Expression) return NULL;
-    node *this = alloc_node(N_assign);
-    this->N_assign.Var = Var;
-    this->N_assign.Expression = Expression;
+node *alloc_assign(node * var, node * expression) {
+    if (!expression) return NULL;
+    node *this = alloc_node(assign_n);
+    this->assign_n.var = var;
+    this->assign_n.expression = expression;
     return this;
 }
 
-node *alloc_binop(binop_t Op, node * Left, node * Right) {
-    node *this = alloc_node(N_binop);
-    this->N_binop.Left = Left;
-    this->N_binop.Right = Right;
-    this->N_binop.Op = Op;
+node *alloc_binop(binop_t op, node * left, node * right) {
+    node *this = alloc_node(binop_n);
+    this->binop_n.left = left;
+    this->binop_n.right = right;
+    this->binop_n.op = op;
     return this;
 }
 
-node *alloc_var(char *Name, node * Next) {
-    node *this = alloc_node(N_var);
-    this->N_var.Name = Name;
+node *alloc_var(char *name, node * next) {
+    node *this = alloc_node(var_n);
+    this->var_n.name = name;
     return this;
 }
 
-node *alloc_int(int Value) {
-    node *this = alloc_node(N_int);
-    this->N_int.Value = Value;
+node *alloc_int(int value) {
+    node *this = alloc_node(int_n);
+    this->int_n.value = value;
     return this;
 }
 
-node *alloc_float(float Value) {
-    node *this = alloc_node(N_float);
-    this->N_float.Value = Value;
+node *alloc_float(float value) {
+    node *this = alloc_node(float_n);
+    this->float_n.value = value;
     return this;
 }
 
-node *alloc_bool(bool Value) {
-    node *this = alloc_node(N_bool);
-    this->N_bool.Value = Value;
+node *alloc_bool(bool value) {
+    node *this = alloc_node(bool_n);
+    this->bool_n.value = value;
     return this;
 }

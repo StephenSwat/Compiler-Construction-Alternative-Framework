@@ -10,7 +10,7 @@ static node *free_generic(node *this, info *info) {
 }
 
 static node *free_var(node * this, info * info) {
-    free(this->N_var.Name);
+    free(this->var_n.name);
     free(this);
     return NULL;
 }
@@ -18,7 +18,7 @@ static node *free_var(node * this, info * info) {
 node *free_tree(node * free_node) {
     traverse_fun_t select_fun(node * this) {
         switch (this->nodetype) {
-            case N_var: return free_var;
+            case var_n: return free_var;
             default: return free_generic;
         }
     }

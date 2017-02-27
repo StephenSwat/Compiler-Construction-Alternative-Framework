@@ -2,14 +2,14 @@
 
 char *nodetype_string(nodetype_t t) {
     switch (t) {
-        case N_program: return "program";
-        case N_statements: return "statements";
-        case N_assign: return "assign";
-        case N_binop: return "binop";
-        case N_var: return "var";
-        case N_int: return "int";
-        case N_float: return "float";
-        case N_bool: return "bool";
+        case program_n: return "program";
+        case statements_n: return "statements";
+        case assign_n: return "assign";
+        case binop_n: return "binop";
+        case var_n: return "var";
+        case int_n: return "int";
+        case float_n: return "float";
+        case bool_n: return "bool";
         default: return "unknown";
     }
 }

@@ -7,14 +7,14 @@ struct info {
 };
 
 static node *sum_int(node * this, info * info) {
-    info->sum += this->N_int.Value;
+    info->sum += this->int_n.value;
     return traverse_children(this, info);
 }
 
 node *sum_ints_init(node *tree) {
     traverse_fun_t select_fun(node * this) {
         switch (this->nodetype) {
-            case N_int: return sum_int;
+            case int_n: return sum_int;
             default: return traverse_children;
         }
     }

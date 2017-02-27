@@ -11,20 +11,20 @@ node *traverse_none(node * this, info * info) {
 
 node *traverse_children(node * this, info * info) {
     switch (this->nodetype) {
-        case N_program:
-            this->N_program.Statements = traverse_init(this->N_program.Statements, info);
+        case program_n:
+            this->program_n.statements = traverse_init(this->program_n.statements, info);
             break;
-        case N_statements:
-            this->N_statements.Statement = traverse_init(this->N_statements.Statement, info);
-            this->N_statements.Next = traverse_init(this->N_statements.Next, info);
+        case statements_n:
+            this->statements_n.statement = traverse_init(this->statements_n.statement, info);
+            this->statements_n.next = traverse_init(this->statements_n.next, info);
             break;
-        case N_assign:
-            this->N_assign.Var = traverse_init(this->N_assign.Var, info);
-            this->N_assign.Expression = traverse_init(this->N_assign.Expression, info);
+        case assign_n:
+            this->assign_n.var = traverse_init(this->assign_n.var, info);
+            this->assign_n.expression = traverse_init(this->assign_n.expression, info);
             break;
-        case N_binop:
-            this->N_binop.Left = traverse_init(this->N_binop.Left, info);
-            this->N_binop.Right = traverse_init(this->N_binop.Right, info);
+        case binop_n:
+            this->binop_n.left = traverse_init(this->binop_n.left, info);
+            this->binop_n.right = traverse_init(this->binop_n.right, info);
             break;
         default:
             break;

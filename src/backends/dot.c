@@ -9,25 +9,25 @@ struct info {
 
 static node *output_dot_generic(node *this, info * info) {
     switch (this->nodetype) {
-        case N_statements:
+        case statements_n:
             fprintf(outfile, "%lu [label=%s];\n", (long) this, nodetype_string(this->nodetype));
             if (info->parent && info->parent->nodetype == this->nodetype)
                 fprintf(outfile, "{rank = same; %lu; %lu;}\n", (long) info->parent, (long) this);
             break;
-        case N_var:
-            fprintf(outfile, "%lu [label=\"var (%s)\"];\n", (long) this, this->N_var.Name);
+        case var_n:
+            fprintf(outfile, "%lu [label=\"var (%s)\"];\n", (long) this, this->var_n.name);
             break;
-        case N_binop:
-            fprintf(outfile, "%lu [label=\"binop (%s)\"];\n", (long) this, binop_string(this->N_binop.Op));
+        case binop_n:
+            fprintf(outfile, "%lu [label=\"binop (%s)\"];\n", (long) this, binop_string(this->binop_n.op));
             break;
-        case N_int:
-            fprintf(outfile, "%lu [label=\"int (%d)\"];\n", (long) this, this->N_int.Value);
+        case int_n:
+            fprintf(outfile, "%lu [label=\"int (%d)\"];\n", (long) this, this->int_n.value);
             break;
-        case N_float:
-            fprintf(outfile, "%lu [label=\"float (%f)\"];\n", (long) this, this->N_float.Value);
+        case float_n:
+            fprintf(outfile, "%lu [label=\"float (%f)\"];\n", (long) this, this->float_n.value);
             break;
-        case N_bool:
-            fprintf(outfile, "%lu [label=\"bool (%s)\"];\n", (long) this, this->N_bool.Value ? "true" : "false");
+        case bool_n:
+            fprintf(outfile, "%lu [label=\"bool (%s)\"];\n", (long) this, this->bool_n.value ? "true" : "false");
             break;
         default:
             fprintf(outfile, "%lu [label=%s];\n", (long) this, nodetype_string(this->nodetype));

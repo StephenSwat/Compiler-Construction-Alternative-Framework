@@ -26,7 +26,7 @@ typedef enum {
 } binop_t;
 
 typedef enum {
-    N_program, N_statements, N_assign, N_binop, N_var, N_int, N_float, N_bool
+    program_n, statements_n, assign_n, binop_n, var_n, int_n, float_n, bool_n
 } nodetype_t;
 
 struct node {
@@ -35,30 +35,30 @@ struct node {
 
     union {
         struct {
-            node *Var, *Expression;
-        } N_assign;
+            node *var, *expression;
+        } assign_n;
         struct {
-            binop_t Op;
-            node *Left, *Right;
-        } N_binop;
+            binop_t op;
+            node *left, *right;
+        } binop_n;
         struct {
-            node *Statements;
-        } N_program;
+            node *statements;
+        } program_n;
         struct {
-            node *Statement, *Next;
-        } N_statements;
+            node *statement, *next;
+        } statements_n;
         struct {
-            char *Name;
-        } N_var;
+            char *name;
+        } var_n;
         struct {
-            float Value;
-        } N_float;
+            float value;
+        } float_n;
         struct {
-            bool Value;
-        } N_bool;
+            bool value;
+        } bool_n;
         struct {
-            int Value;
-        } N_int;
+            int value;
+        } int_n;
     };
 };
 

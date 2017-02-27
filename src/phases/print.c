@@ -23,7 +23,7 @@ struct info {
 };
 
 node *print_program(node * this, info * info) {
-    traverse_init(this->N_program.Statements, info);
+    traverse_init(this->program_n.statements, info);
     return this;
 }
 
@@ -31,28 +31,28 @@ node *print_statements(node * this, info * info) {
     logging_print_indent();
 
     CSTACK_PUSH(RED);
-    traverse_init(this->N_statements.Statement, info);
+    traverse_init(this->statements_n.statement, info);
     CSTACK_POP();
 
     fprintf(stderr, ";\n");
-    traverse_init(this->N_statements.Next, info);
+    traverse_init(this->statements_n.next, info);
 
     return this;
 }
 
 node *print_assign(node * this, info * info) {
-    traverse_init(this->N_assign.Var, info);
+    traverse_init(this->assign_n.var, info);
     fprintf(stderr, " = ");
-    traverse_init(this->N_assign.Expression, info);
+    traverse_init(this->assign_n.expression, info);
     return this;
 }
 
 node *print_binop(node * this, info * info) {
     CSTACK_PUSH(MAGENTA);
     fprintf(stderr, "(");
-    traverse_init(this->N_binop.Left, info);
-    fprintf(stderr, " %s ", binop_string(this->N_binop.Op));
-    traverse_init(this->N_binop.Right, info);
+    traverse_init(this->binop_n.left, info);
+    fprintf(stderr, " %s ", binop_string(this->binop_n.op));
+    traverse_init(this->binop_n.right, info);
     fprintf(stderr, ")");
     CSTACK_POP();
 
@@ -61,28 +61,28 @@ node *print_binop(node * this, info * info) {
 
 node *print_float(node * this, info * info) {
     CSTACK_PUSH(YELLOW);
-    fprintf(stderr, "%f", this->N_float.Value);
+    fprintf(stderr, "%f", this->float_n.value);
     CSTACK_POP();
     return this;
 }
 
 node *print_int(node * this, info * info) {
     CSTACK_PUSH(YELLOW);
-    fprintf(stderr, "%i", this->N_int.Value);
+    fprintf(stderr, "%i", this->int_n.value);
     CSTACK_POP();
     return this;
 }
 
 node *print_bool(node * this, info * info) {
     CSTACK_PUSH(YELLOW);
-    fprintf(stderr, this->N_bool.Value ? "true" : "false");
+    fprintf(stderr, this->bool_n.value ? "true" : "false");
     CSTACK_POP();
     return this;
 }
 
 node *print_var(node * this, info * info) {
     CSTACK_PUSH(CYAN);
-    fprintf(stderr, "%s", this->N_var.Name);
+    fprintf(stderr, "%s", this->var_n.name);
     CSTACK_POP();
     return this;
 }
@@ -90,14 +90,14 @@ node *print_var(node * this, info * info) {
 node *print_init(node * syntaxtree) {
     traverse_fun_t select_fun(node * this) {
         switch (this->nodetype) {
-            case N_assign: return print_assign;
-            case N_binop: return print_binop;
-            case N_bool: return print_bool;
-            case N_float: return print_float;
-            case N_int: return print_int;
-            case N_program: return print_program;
-            case N_statements: return print_statements;
-            case N_var: return print_var;
+            case assign_n: return print_assign;
+            case binop_n: return print_binop;
+            case bool_n: return print_bool;
+            case float_n: return print_float;
+            case int_n: return print_int;
+            case program_n: return print_program;
+            case statements_n: return print_statements;
+            case var_n: return print_var;
             default: logging_log(ABORT, "This node has no print function!"); return NULL;
         }
     }
