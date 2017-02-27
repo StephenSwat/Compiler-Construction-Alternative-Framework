@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "alloc.h"
 #include "traverse.h"
 #include "htable.h"
+#include "node.gen.h"
 
 static node *free_generic(node *this, info *info) {
     traverse_children(this, info);

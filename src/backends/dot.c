@@ -2,6 +2,7 @@
 #include "types.h"
 #include "traverse.h"
 #include "main.h"
+#include "node.gen.h"
 
 struct info {
     node *parent;

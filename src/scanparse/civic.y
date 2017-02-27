@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include "types.h"
 #include "logging.h"
-#include "alloc.h"
+#include "node.gen.h"
 #include "main.h"
 
 FILE *yyin;
@@ -59,8 +59,8 @@ var
     ;
 
 expression
-    : '(' expression binop expression ')' { $$ = alloc_binop($3, $2, $4); }
-    | var { $$ = alloc_var($1, NULL); }
+    : '(' expression binop expression ')' { $$ = alloc_binop($2, $4, $3); }
+    | var { $$ = alloc_var($1); }
     | constant { $$ = $1; }
     ;
 
@@ -81,7 +81,7 @@ binop
     ;
 
 assign
-    : var '=' expression { $$ = alloc_assign(alloc_var($1, NULL), $3); }
+    : var '=' expression { $$ = alloc_assign(alloc_var($1), $3); }
     ;
 
 constant

@@ -1,19 +1,5 @@
 #include "types.h"
 
-char *nodetype_string(nodetype_t t) {
-    switch (t) {
-        case program_n: return "program";
-        case statements_n: return "statements";
-        case assign_n: return "assign";
-        case binop_n: return "binop";
-        case var_n: return "var";
-        case int_n: return "int";
-        case float_n: return "float";
-        case bool_n: return "bool";
-        default: return "unknown";
-    }
-}
-
 char *type_string(type_t t) {
     switch (t) {
         case TY_bool: return "bool";

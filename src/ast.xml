@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ast>
+    <attributetypes>
+        <type name="string" ctype="char *" />
+        <type name="int" ctype="int" />
+        <type name="bool" ctype="bool" />
+        <type name="float" ctype="float" />
+        <type name="binop" ctype="binop_t" />
+    </attributetypes>
+
+    <nodesets>
+        <nodeset name="expression">
+            <node name="binop" />
+            <node name="var" />
+            <node name="num" />
+            <node name="float" />
+            <node name="bool" />
+        </nodeset>
+        <nodeset name="statement">
+            <node name="assign" />
+        </nodeset>
+    </nodesets>
+
+    <nodes>
+        <node name="program">
+            <description>A complete program</description>
+            <child name="statements" nodetype="statements" />
+        </node>
+
+        <node name="statements">
+            <description>A sequence of statements</description>
+            <child name="statement" nodeset="statement" />
+            <child name="next" nodetype="statements" />
+        </node>
+
+        <node name="assign">
+            <description>An assignment</description>
+            <child name="var" nodetype="var" />
+            <child name="value" nodeset="expression" />
+        </node>
+
+        <node name="binop">
+            <description>A binary operation</description>
+            <child name="left" nodeset="expression" />
+            <child name="right" nodeset="expression" />
+            <attribute name="op" attributetype="binop" />
+        </node>
+
+        <node name="var">
+            <description>A variable mention</description>
+            <attribute name="name" attributetype="string" />
+        </node>
+
+        <node name="float">
+            <description>A floating point constant</description>
+            <attribute name="value" attributetype="float" />
+        </node>
+
+        <node name="int">
+            <description>An integer constant</description>
+            <attribute name="value" attributetype="int" />
+        </node>
+
+        <node name="bool">
+            <description>A boolean constant</description>
+            <attribute name="value" attributetype="bool" />
+        </node>
+    </nodes>
+</ast>

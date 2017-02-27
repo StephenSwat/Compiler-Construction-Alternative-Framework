@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "logging.h"
 #include "traverse.h"
+#include "node.gen.h"
 
 struct info {
     int sum;

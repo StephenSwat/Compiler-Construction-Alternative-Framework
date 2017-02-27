@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "traverse.h"
 #include "logging.h"
-#include "alloc.h"
+#include "node.gen.h"
 
 #define CSTACK_PUSH(c) char *old_c = info->colour; info->colour = c; if (ast_colour) fprintf(stderr, "%s", info->colour);
 #define CSTACK_POP() info->colour = old_c; if (ast_colour) fprintf(stderr, "%s", info->colour);
@@ -43,7 +43,7 @@ node *print_statements(node * this, info * info) {
 node *print_assign(node * this, info * info) {
     traverse_init(this->assign_n.var, info);
     fprintf(stderr, " = ");
-    traverse_init(this->assign_n.expression, info);
+    traverse_init(this->assign_n.value, info);
     return this;
 }
 

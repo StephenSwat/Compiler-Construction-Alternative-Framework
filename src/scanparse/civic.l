@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include "types.h"
-#include "alloc.h"
+#include "node.gen.h"
 #include "civic.parser.h"
 #include "logging.h"
 #include "main.h"

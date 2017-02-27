@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "traverse.h"
+#include "node.gen.h"
 
 static node *invert_binop(node *this, info *info) {
     if (this->binop_n.op == BO_add) this->binop_n.op = BO_sub;
