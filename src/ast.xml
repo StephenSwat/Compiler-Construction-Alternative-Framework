@@ -23,47 +23,39 @@
     </nodesets>
 
     <nodes>
-        <node name="program">
-            <description>A complete program</description>
+        <node name="program" description="A complete program">
             <child name="statements" nodetype="statements" />
         </node>
 
-        <node name="statements">
-            <description>A sequence of statements</description>
+        <node name="statements" description="A sequence of statements">
             <child name="statement" nodeset="statement" />
             <child name="next" nodetype="statements" />
         </node>
 
-        <node name="assign">
-            <description>An assignment</description>
+        <node name="assign" description="An assignment">
             <child name="var" nodetype="var" />
             <child name="value" nodeset="expression" />
         </node>
 
-        <node name="binop">
-            <description>A binary operation</description>
+        <node name="binop" description="A binary operation">
             <child name="left" nodeset="expression" />
             <child name="right" nodeset="expression" />
             <attribute name="op" attributetype="binop" />
         </node>
 
-        <node name="var">
-            <description>A variable mention</description>
+        <node name="var" description="A variable mention">
             <attribute name="name" attributetype="string" />
         </node>
 
-        <node name="float">
-            <description>A floating point constant</description>
+        <node name="float" description="A floating point constant">
             <attribute name="value" attributetype="float" />
         </node>
 
-        <node name="int">
-            <description>An integer constant</description>
+        <node name="int" description="An integer constant">
             <attribute name="value" attributetype="int" />
         </node>
 
-        <node name="bool">
-            <description>A boolean constant</description>
+        <node name="bool" description="A boolean constant">
             <attribute name="value" attributetype="bool" />
         </node>
     </nodes>
