@@ -19,13 +19,13 @@ static int yyerror(char *errname);
 %}
 
 %union {
-    nodetype nodetype;
+    nodetype_t nodetype;
     char *id;
     int cint;
     bool cbool;
     float cfloat;
-    binop cbinop;
-    typet ctypet;
+    binop_t cbinop;
+    type_t ctype_t;
     node *node;
 }
 

@@ -1,6 +1,6 @@
 #include "types.h"
 
-char *nodetype_string(nodetype t) {
+char *nodetype_string(nodetype_t t) {
     switch (t) {
         case N_program: return "program";
         case N_statements: return "statements";
@@ -14,7 +14,7 @@ char *nodetype_string(nodetype t) {
     }
 }
 
-char *type_string(typet t) {
+char *type_string(type_t t) {
     switch (t) {
         case TY_bool: return "bool";
         case TY_int: return "int";
@@ -24,7 +24,7 @@ char *type_string(typet t) {
     }
 }
 
-char *binop_string(binop t) {
+char *binop_string(binop_t t) {
     switch (t) {
         case BO_add: return "+";
         case BO_sub: return "-";

@@ -4,7 +4,7 @@
 #include "logging.h"
 #include "main.h"
 
-static node *alloc_node(nodetype type) {
+static node *alloc_node(nodetype_t type) {
     node *result = (node *) malloc(sizeof(node));
     result->nodetype = type;
     result->lineno = line;
@@ -34,7 +34,7 @@ node *alloc_assign(node * Var, node * Expression) {
     return this;
 }
 
-node *alloc_binop(binop Op, node * Left, node * Right) {
+node *alloc_binop(binop_t Op, node * Left, node * Right) {
     node *this = alloc_node(N_binop);
     this->N_binop.Left = Left;
     this->N_binop.Right = Right;

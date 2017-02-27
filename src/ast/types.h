@@ -18,26 +18,27 @@ typedef enum {
 
 typedef enum {
     TY_bool, TY_int, TY_float, TY_void
-} typet;
+} type_t;
 
 typedef enum {
     BO_add, BO_sub, BO_mul, BO_div, BO_mod, BO_lt, BO_le, BO_gt, BO_ge, BO_eq,
     BO_ne, BO_and, BO_or
-} binop;
+} binop_t;
 
 typedef enum {
     N_program, N_statements, N_assign, N_binop, N_var, N_int, N_float, N_bool
-} nodetype;
+} nodetype_t;
 
 struct node {
-    nodetype nodetype;
+    nodetype_t nodetype;
     int lineno, colno;
+
     union {
         struct {
             node *Var, *Expression;
         } N_assign;
         struct {
-            binop Op;
+            binop_t Op;
             node *Left, *Right;
         } N_binop;
         struct {
@@ -61,6 +62,6 @@ struct node {
     };
 };
 
-char *nodetype_string(nodetype t);
-char *type_string(typet t);
-char *binop_string(binop t);
+char *nodetype_string(nodetype_t t);
+char *type_string(type_t t);
+char *binop_string(binop_t t);
