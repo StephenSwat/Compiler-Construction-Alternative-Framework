@@ -60,5 +60,5 @@ bool traverse_always(void) {
 }
 
 bool traverse_never(void) {
-    return true;
+    return false;
 }

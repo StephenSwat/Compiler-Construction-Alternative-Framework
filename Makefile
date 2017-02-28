@@ -8,12 +8,17 @@ GENERATED     = src/ast/node.gen.c
 INDENT_FLAGS  = -bad -bap -i4 -bls -br -brf -brs -nut -ce -cs -nprs -npcs -npsl -nbap -nbad -sob
 AST           = src/ast.xml
 
-.PHONY: clean test
+.PHONY: clean test doc
 
 civicc: $(GENERATED:.c=.o) $(PARSER:.c=.o) $(LEXER:.c=.o) $(SRC:.c=.o)
 	@echo "Linking executable: $@"
 	@mkdir -p bin/
 	@$(CC) -o bin/$@ $(GENERATED:.c=.o) $(PARSER:.c=.o) $(LEXER:.c=.o) $(SRC:.c=.o)
+
+doc:
+	@echo "Generating documentation..."
+	@mkdir -p doc
+	@xsltproc src/ast/node.gen.dot.xsl $(AST) | dot -Tpng -o doc/ast.png
 
 clean:
 	@rm -f bin/civicc $(SRC:.c=.o) $(SRC:.c=.d) $(LEXER) $(LEXER:.c=.o) $(LEXER:.c=.d) \

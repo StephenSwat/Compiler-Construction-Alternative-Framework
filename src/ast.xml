@@ -11,35 +11,35 @@
 
     <nodesets>
         <nodeset name="expression">
-            <node name="binop" />
-            <node name="var" />
-            <node name="num" />
-            <node name="float" />
-            <node name="bool" />
+            <node target="binop" />
+            <node target="var" />
+            <node target="int" />
+            <node target="float" />
+            <node target="bool" />
         </nodeset>
         <nodeset name="statement">
-            <node name="assign" />
+            <node target="assign" />
         </nodeset>
     </nodesets>
 
     <nodes>
         <node name="program" description="A complete program">
-            <child name="statements" nodetype="statements" />
+            <child type="node" name="statements" target="statements" />
         </node>
 
         <node name="statements" description="A sequence of statements">
-            <child name="statement" nodeset="statement" />
-            <child name="next" nodetype="statements" />
+            <child type="nodeset" name="statement" target="statement" />
+            <child type="node" name="next" target="statements" optional="true" />
         </node>
 
         <node name="assign" description="An assignment">
-            <child name="var" nodetype="var" />
-            <child name="value" nodeset="expression" />
+            <child type="node" name="var" target="var" />
+            <child type="nodeset" name="value" target="expression" />
         </node>
 
         <node name="binop" description="A binary operation">
-            <child name="left" nodeset="expression" />
-            <child name="right" nodeset="expression" />
+            <child type="nodeset" name="left" target="expression" />
+            <child type="nodeset" name="right" target="expression" />
             <attribute name="op" attributetype="binop" />
         </node>
 
