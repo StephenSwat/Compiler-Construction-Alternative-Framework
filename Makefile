@@ -19,6 +19,7 @@ doc:
 	@echo "Generating documentation..."
 	@mkdir -p doc
 	@xsltproc src/ast/node.gen.dot.xsl $(AST) | dot -Tpng -o doc/ast.png
+	@xsltproc -o doc/ast.html src/ast/node.gen.html.xsl $(AST)
 
 clean:
 	@rm -f bin/civicc $(SRC:.c=.o) $(SRC:.c=.d) $(LEXER) $(LEXER:.c=.o) $(LEXER:.c=.d) \

@@ -13,8 +13,7 @@
     <xsl:variable name="name"><xsl:value-of select="@name"/></xsl:variable>
 
     "<xsl:value-of select="$name" />" [label="&lt;core&gt; <xsl:value-of select="@name" />
-    <xsl:for-each select="attribute">|<xsl:value-of select="@name" />
-    </xsl:for-each>" shape="record"];
+    <xsl:for-each select="attribute">|<xsl:value-of select="@name" /></xsl:for-each>" shape="record"];
 
     <xsl:for-each select="child">
         <xsl:variable name="label"><xsl:value-of select="@name"/></xsl:variable>
