@@ -1,62 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ast>
-    <attributetypes>
-        <type name="string" ctype="char *" />
-        <type name="int" ctype="int" />
-        <type name="bool" ctype="bool" />
-        <type name="float" ctype="float" />
-        <type name="binop" ctype="binop_t" />
-    </attributetypes>
+    <nodeset name="expression">
+        <node target="binop" />
+        <node target="var" />
+        <node target="int" />
+        <node target="float" />
+        <node target="bool" />
+    </nodeset>
 
-    <nodesets>
-        <nodeset name="expression">
-            <node target="binop" />
-            <node target="var" />
-            <node target="int" />
-            <node target="float" />
-            <node target="bool" />
-        </nodeset>
-        <nodeset name="statement">
-            <node target="assign" />
-        </nodeset>
-    </nodesets>
+    <nodeset name="statement">
+        <node target="assign" />
+    </nodeset>
 
-    <nodes>
-        <node name="program" description="A complete program">
-            <child type="node" name="statements" target="statements" />
-        </node>
+    <node name="program" description="A complete program">
+        <child name="statements" target="statements" />
+    </node>
 
-        <node name="statements" description="A sequence of statements">
-            <child type="nodeset" name="statement" target="statement" />
-            <child type="node" name="next" target="statements" optional="true" />
-        </node>
+    <node name="statements" description="A sequence of statements">
+        <child name="statement" target="statement" />
+        <child name="next" target="statements" optional="true" />
+    </node>
 
-        <node name="assign" description="An assignment">
-            <child type="node" name="var" target="var" />
-            <child type="nodeset" name="value" target="expression" />
-        </node>
+    <node name="assign" description="An assignment">
+        <child name="var" target="var" />
+        <child name="value" target="expression" />
+    </node>
 
-        <node name="binop" description="A binary operation">
-            <child type="nodeset" name="left" target="expression" />
-            <child type="nodeset" name="right" target="expression" />
-            <attribute name="op" attributetype="binop" />
-        </node>
+    <node name="binop" description="A binary operation">
+        <child name="left" target="expression" />
+        <child name="right" target="expression" />
+        <attribute name="op" type="binop_t" />
+    </node>
 
-        <node name="var" description="A variable mention">
-            <attribute name="name" attributetype="string" />
-        </node>
+    <node name="var" description="A variable mention">
+        <attribute name="name" type="char *" />
+    </node>
 
-        <node name="float" description="A floating point constant">
-            <attribute name="value" attributetype="float" />
-        </node>
+    <node name="float" description="A floating point constant">
+        <attribute name="value" type="float" />
+    </node>
 
-        <node name="int" description="An integer constant">
-            <attribute name="value" attributetype="int" />
-        </node>
+    <node name="int" description="An integer constant">
+        <attribute name="value" type="int" />
+    </node>
 
-        <node name="bool" description="A boolean constant">
-            <attribute name="value" attributetype="bool" />
-        </node>
-    </nodes>
+    <node name="bool" description="A boolean constant">
+        <attribute name="value" type="bool" />
+    </node>
 </ast>

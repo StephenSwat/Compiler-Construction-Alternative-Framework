@@ -45,7 +45,7 @@ node *traverse_children(node * this, info * info) {
 
 <!-- These templates define behaviour for the step where the allocation function
 definitions are generated. -->
-<xsl:template match="/ast/nodes/node" mode="alloc">
+<xsl:template match="/ast/node" mode="alloc">
     node *alloc_<xsl:value-of select="@name" />(
         <xsl:apply-templates mode="alloc" />
     ) {
@@ -55,37 +55,36 @@ definitions are generated. -->
     }
 </xsl:template>
 
-<xsl:template match="/ast/nodes/node/child" mode="alloc">
+<xsl:template match="/ast/node/child" mode="alloc">
     node *<xsl:value-of select="@name" />
     <xsl:if test="position() != last() - 1">, </xsl:if>
 </xsl:template>
 
-<xsl:template match="/ast/nodes/node/attribute" mode="alloc">
-    <xsl:variable name="attributetype" select="@attributetype"/>
-    <xsl:value-of select="//ast/attributetypes/type[@name=$attributetype]/@ctype" />
+<xsl:template match="/ast/node/attribute" mode="alloc">
+    <xsl:value-of select="@type" />
     <xsl:text> </xsl:text>
     <xsl:value-of select="@name" />
     <xsl:if test="position() != last() - 1">, </xsl:if>
 </xsl:template>
 
-<xsl:template match="/ast/nodes/node/child|/ast/nodes/node/attribute" mode="alloc_inner">
+<xsl:template match="/ast/node/child|/ast/node/attribute" mode="alloc_inner">
     <xsl:text disable-output-escaping="yes">this-&gt;</xsl:text><xsl:value-of select="../@name" />_n.
     <xsl:value-of select="@name" />=<xsl:value-of select="@name" />;
 </xsl:template>
 
 <!-- This one does the nodetype_string function. -->
-<xsl:template match="/ast/nodes/node" mode="nodetype_string">
+<xsl:template match="/ast/node" mode="nodetype_string">
     case <xsl:value-of select="@name" />_n: return "<xsl:value-of select="@name" />";
 </xsl:template>
 
 <!-- and... the traverse_children function. -->
-<xsl:template match="/ast/nodes/node" mode="traverse_children">
+<xsl:template match="/ast/node" mode="traverse_children">
     case <xsl:value-of select="@name" />_n:
         <xsl:apply-templates mode="traverse_children" />
         break;
 </xsl:template>
 
-<xsl:template match="/ast/nodes/node/child" mode="traverse_children">
+<xsl:template match="/ast/node/child" mode="traverse_children">
     <xsl:text disable-output-escaping="yes">this-&gt;</xsl:text><xsl:value-of select="../@name" />_n.
     <xsl:value-of select="@name" />=traverse_init(
     <xsl:text disable-output-escaping="yes">this-&gt;</xsl:text>
