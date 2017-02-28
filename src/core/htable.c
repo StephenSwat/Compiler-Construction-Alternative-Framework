@@ -5,17 +5,13 @@
 
 htable_t *htable_init(int size) {
     htable_t *htable = (htable_t *) malloc(sizeof(htable_t));
-
     htable->size = size;
     htable->slots = (htable_entry_t **) calloc(sizeof(htable_entry_t *), size);
-
     return htable;
 }
 
 void htable_entry_free(htable_entry_t * entry) {
-    if (!entry)
-        return;
-
+    if (!entry) return;
     htable_entry_free(entry->next);
     free(entry->key);
     free(entry->value);
@@ -23,8 +19,7 @@ void htable_entry_free(htable_entry_t * entry) {
 }
 
 void htable_free(htable_t * t) {
-    for (int i = 0; i < t->size; i++)
-        htable_entry_free(t->slots[i]);
+    for (int i = 0; i < t->size; i++) htable_entry_free(t->slots[i]);
     free(t->slots);
     free(t);
 }

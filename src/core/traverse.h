@@ -6,7 +6,7 @@ extern compiler_phase_t compiler_phase;
 extern compiler_phase_t break_phase;
 extern bool changed;
 
-node *traverse_phase(compiler_phase_t, traverse_init_t, const char *, node *, bool);
+node *traverse_phase(phase_t, node *);
 node *traverse_none(node *, info *);
 node *traverse_children(node *, info *);
 node *traverse_init(node *, info *);

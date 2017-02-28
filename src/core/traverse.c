@@ -12,16 +12,16 @@ compiler_phase_t compiler_phase = NULL;
 compiler_phase_t break_phase = NULL;
 bool changed;
 
-node *traverse_phase(compiler_phase_t phase, traverse_init_t fun, const char *name, node * syntax_tree, bool cond) {
-    compiler_phase = phase;
+node *traverse_phase(phase_t phase, node *syntax_tree) {
+    compiler_phase = phase.name;
 
-    if (cond) {
-        logging_log(STATE, "%s ...", name);
+    if (phase.enabled()) {
+        logging_log(STATE, "%s ...", phase.description);
         logging_indent(STATE);
 
         do {
             changed = false;
-            syntax_tree = fun(syntax_tree);
+            syntax_tree = phase.init(syntax_tree);
             if (errors > 0) logging_quit(false);
         } while (changed);
 

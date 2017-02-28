@@ -12,7 +12,7 @@
 #define BOLDYELLOW  "\033[1m\033[33m"
 #define BOLDCYAN    "\033[1m\033[36m"
 
-int verbosity = 2;
+int verbosity = STATE;
 int errors = 0;
 int warnings = 0;
 int indent = 0;
@@ -42,7 +42,7 @@ void logging_print_indent(void) {
 
 void logging_log(logging_t level, const char *format, ...) {
     const char *header;
-    bool quit = false, indent = true, loc = false;
+    bool quit = false, loc = false;
     va_list arg_p;
     va_start(arg_p, format);
 
@@ -73,9 +73,7 @@ void logging_log(logging_t level, const char *format, ...) {
             break;
         }
 
-        if (indent) {
-            logging_print_indent();
-        }
+        logging_print_indent();
 
         if (loc) {
             fprintf(stderr, "%s", header);

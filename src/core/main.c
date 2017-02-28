@@ -65,9 +65,8 @@ void print_usage() {
 
     fprintf(stderr, "\nBREAK OPTION SPECIFIERS:\n");
 
-    for (int i = 0; i < sizeof(phase_list) / sizeof(struct phase_t); i++) {
+    for (int i = 0; i < sizeof(phase_list) / sizeof(struct phase_t); i++)
         fprintf(stderr, "    %s : %s\n", phase_list[i].name, phase_list[i].description);
-    }
 }
 
 void check_options(int argc, char **argv) {
@@ -112,9 +111,8 @@ void check_options(int argc, char **argv) {
     for (int i = optind; i < argc; i++)
         infile = argv[i];
 
-    if (!infile) {
+    if (!infile)
         logging_log(ABORT, "No input file was supplied.");
-    }
 }
 
 void internal_error(int sig) {
@@ -131,12 +129,9 @@ int main(int argc, char *argv[]) {
         logging_log(STATE, "Compiler will exit after %s\n", break_phase);
 
     node *syntax_tree = NULL;
-    struct phase_t phase;
 
-    for (int i = 0; i < sizeof(phase_list) / sizeof(struct phase_t); i++) {
-        phase = phase_list[i];
-        syntax_tree = traverse_phase(phase.name, phase.init, phase.description, syntax_tree, phase.enabled());
-    }
+    for (int i = 0; i < sizeof(phase_list) / sizeof(struct phase_t); i++)
+        syntax_tree = traverse_phase(phase_list[i], syntax_tree);
 
     free(currentfile);
     logging_quit(true);
