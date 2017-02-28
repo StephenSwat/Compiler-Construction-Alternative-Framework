@@ -87,6 +87,10 @@ node *print_var(node * this, info * info) {
     return this;
 }
 
+bool print_enabled(void) {
+    return verbosity >= 3;
+}
+
 node *print_init(node * syntaxtree) {
     traverse_fun_t select_fun(node * this) {
         switch (this->nodetype) {

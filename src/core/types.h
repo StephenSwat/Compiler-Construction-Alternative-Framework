@@ -3,14 +3,13 @@
 #include <stdio.h>
 
 typedef struct info info;
-
 typedef struct node node;
 
 typedef char *compiler_phase_t;
-
 typedef node *(*traverse_fun_t)(node *, info*);
-
 typedef traverse_fun_t (*traverse_choice_t)(node *);
+typedef node *(*traverse_init_t)(node *);
+typedef bool (*traverse_enabled_t)(void);
 
 typedef enum {
     BE_civvm, BE_dot, BE_none
@@ -26,6 +25,13 @@ typedef enum {
 } binop_t;
 
 typedef enum nodetype_t nodetype_t;
+
+typedef struct phase_t {
+    char name[3];
+    traverse_init_t init;
+    char *description;
+    traverse_enabled_t enabled;
+} phase_t;
 
 char *nodetype_string(nodetype_t t);
 char *type_string(type_t t);

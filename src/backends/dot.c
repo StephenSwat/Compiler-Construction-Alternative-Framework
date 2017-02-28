@@ -47,6 +47,10 @@ static node *output_dot_generic(node *this, info * info) {
     return this;
 }
 
+bool output_dot_enabled(void) {
+    return backend == BE_dot;
+}
+
 node *output_dot_init(node * syntaxtree) {
     traverse_fun_t select_fun(node * this) {
         return output_dot_generic;
@@ -58,6 +62,6 @@ node *output_dot_init(node * syntaxtree) {
     fprintf(outfile, "node [shape=box]\n");
     syntaxtree = traverse_do(select_fun, syntaxtree, &info);
     fprintf(outfile, "}\n");
-
+    
     return syntaxtree;
 }

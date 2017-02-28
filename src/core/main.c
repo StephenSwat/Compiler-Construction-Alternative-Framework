@@ -4,10 +4,8 @@
 #include <signal.h>
 #include <getopt.h>
 #include "logging.h"
-#include "phase.h"
+#include "phases.h"
 #include "main.h"
-
-node *phase_run();
 
 char *infile = NULL;
 FILE *outfile = NULL;
@@ -65,16 +63,11 @@ void print_usage() {
         "    -b <spec>       Break after the compilation stage given by <spec>, where\n"
         "                    <spec> is a choice from the specifiers listed below.\n");
 
-    fprintf(stderr,
-        "\nBREAK OPTION SPECIFIERS:\n"
-        "    cpp : Running C preprocessor\n"
-        "    prs : Parsing CiviC program\n"
-        "    ast : Print AST\n"
-        "    sin : Summing integers (dummy phase)\n"
-        "    inv : Inverting addition and subtraction (dummy phase)\n"
-        "    ast : Print AST\n"
-        "    gen : Generating bytecode\n"
-        "    frt : De-allocating syntax tree representation\n");
+    fprintf(stderr, "\nBREAK OPTION SPECIFIERS:\n");
+
+    for (int i = 0; i < sizeof(phase_list) / sizeof(struct phase_t); i++) {
+        fprintf(stderr, "    %s : %s\n", phase_list[i].name, phase_list[i].description);
+    }
 }
 
 void check_options(int argc, char **argv) {
@@ -137,7 +130,13 @@ int main(int argc, char *argv[]) {
     if (break_phase)
         logging_log(STATE, "Compiler will exit after %s\n", break_phase);
 
-    phase_run();
+    node *syntax_tree = NULL;
+    struct phase_t phase;
+
+    for (int i = 0; i < sizeof(phase_list) / sizeof(struct phase_t); i++) {
+        phase = phase_list[i];
+        syntax_tree = traverse_phase(phase.name, phase.init, phase.description, syntax_tree, phase.enabled());
+    }
 
     free(currentfile);
     logging_quit(true);

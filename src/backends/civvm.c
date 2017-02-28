@@ -4,6 +4,10 @@
 #include "main.h"
 #include "node.gen.h"
 
+bool output_civvm_enabled(void) {
+    return backend == BE_civvm;
+}
+
 node *output_civvm_init(node * syntaxtree) {
     traverse_fun_t select_fun(node * this) {
         return traverse_children;
