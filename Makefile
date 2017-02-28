@@ -1,9 +1,9 @@
 CC           := gcc
 CFLAGS       := -Wall -std=gnu11 -Og -g -D_GNU_SOURCE -MMD
-SOURCE_DIRS   = src/core/ src/phases/ src/scanparse/ src/ast/ src/backends/
+SOURCE_DIRS   = src/core/ src/phases/ src/phases/backend/ src/phases/frontend/ src/ast/
 SRC           = $(foreach dir,$(SOURCE_DIRS),$(wildcard $(dir)*.c))
-PARSER        = src/scanparse/civic.parser.c
-LEXER         = src/scanparse/civic.lexer.c
+PARSER        = src/phases/frontend/civic.parser.c
+LEXER         = src/phases/frontend/civic.lexer.c
 GENERATED     = src/ast/node.gen.c
 INDENT_FLAGS  = -bad -bap -i4 -bls -br -brf -brs -nut -ce -cs -nprs -npcs -npsl -nbap -nbad -sob
 AST           = src/ast.xml
