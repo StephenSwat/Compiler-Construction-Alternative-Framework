@@ -46,20 +46,6 @@ code nor the Compiler Construction staff are responsible for what happens to you
 when you use this code. It is only here as a guideline and possible resource.
 **Use at your own risk**.
 
-## Cons
-
-Nothing is perfect and neither is this framework. There are some things that the
-official framework does much better than this one. If you decide to use this
-code, please note the following:
-
- * In the beginning of the course, you will have to work with an abstract
-   syntax tree and submit some files generated from it. This framework currently
-   does not allow any automatic generation of documentation, but this might be
-   implemented later. You will have to manually create your graph and HTML page.
- * The automatic code generation in the original framework makes it easier to
-   create new nodes. Implementing new nodes in this framework will be a little
-   more manual labour, but this is mostly a one-time investment of time.
-
 ## Additional resources
 
 If you are struggling to understand the big picture behind this framework, a
