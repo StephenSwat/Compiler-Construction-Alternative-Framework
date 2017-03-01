@@ -3,6 +3,7 @@
 <xsl:output omit-xml-declaration="yes" />
 <xsl:template match="text()" mode="alloc"/>
 <xsl:template match="text()" mode="alloc_inner"/>
+<xsl:template match="text()" mode="nodeset"/>
 <xsl:template match="text()" mode="nodetype_string"/>
 <xsl:template match="text()" mode="traverse_children"/>
 
@@ -13,7 +14,11 @@
 #include "main.h"
 #include "traverse.h"
 #include "node.gen.h"
+</xsl:text>
 
+<xsl:apply-templates mode="nodeset" />
+
+<xsl:text disable-output-escaping="yes">
 static node *alloc_node(nodetype_t type) {
     node *result = (node *) malloc(sizeof(node));
     result->nodetype = type;
@@ -41,6 +46,20 @@ node *traverse_children(node * this, info * info) {
 
     return this;
 }
+</xsl:template>
+
+<!-- Some functions to test if a node is part of a nodeset -->
+<xsl:template match="/ast/nodeset" mode="nodeset">
+    static bool node_is_<xsl:value-of select="@name" />(nodetype_t in) {
+        switch (in) {
+            <xsl:for-each select="node">
+            case <xsl:value-of select="@target" />_n:
+            </xsl:for-each>
+                return true;
+            default:
+                return false;
+        }
+    }
 </xsl:template>
 
 <!-- These templates define behaviour for the step where the allocation function
